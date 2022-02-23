@@ -8,6 +8,9 @@
 /var/
 /vendor/
 .env
+/bin/*
+!bin/console
+!bin/symfony_requirements
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
