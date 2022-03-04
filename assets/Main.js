@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
     Route,
     Link
@@ -13,14 +13,18 @@ import InstrumentShow from "./pages/InstrumentShow"
 
 function Main() {
     return (
-        <Router>
+       <div className="App">
+         <header className="App-header">
+           <Router>
             <Switch>
                 <Route exact path="/"  component={InstrumentList} />
                 <Route path="/create"  component={InstrumentCreate} />
                 <Route path="/edit/:id"  component={InstrumentEdit} />
                 <Route path="/show/:id"  component={InstrumentShow} />
             </Switch>
-        </Router>
+          </Router>
+       </header>
+      </div>
     );
 }
 
