@@ -18,6 +18,8 @@ class InstrumentController extends AbstractController
   */
  public function index(): Response
  {
+     $response = new Response();
+     $response->headers->set('Content-Type', 'application/json');
 
      $instruments = $this->getDoctrine()
          ->getRepository(Instrument::class)
@@ -33,9 +35,9 @@ class InstrumentController extends AbstractController
             'description' => $instrument->getDescription(),
         ];
      }
+     $response->setContent(json_encode($data));
 
-
-     return $this->json($data);
+     return $response;
  }
 
  /**
@@ -43,6 +45,9 @@ class InstrumentController extends AbstractController
   */
  public function new(Request $request): Response
  {
+     $response = new Response();
+     $response->headers->set('Content-Type', 'application/json');
+
      $entityManager = $this->getDoctrine()->getManager();
      if(!$request->request->get('name')){
        return $this->json('Il faut choisir un nom pour l\'instrument');
@@ -59,7 +64,9 @@ class InstrumentController extends AbstractController
      $entityManager->persist($instrument);
      $entityManager->flush();
 
-     return $this->json('Nouvel instrument créé ' . $instrument->getName());
+
+     $response->setContent(json_encode('Nouvel instrument créé ' . $instrument->getName()));
+     return $response;
  }
 
  /**
@@ -67,6 +74,9 @@ class InstrumentController extends AbstractController
   */
  public function show(int $id): Response
  {
+     $response = new Response();
+     $response->headers->set('Content-Type', 'application/json');
+
      $instrument = $this->getDoctrine()
          ->getRepository(Instrument::class)
          ->find($id);
@@ -82,7 +92,9 @@ class InstrumentController extends AbstractController
          'description' => $instrument->getDescription(),
      ];
 
-     return $this->json($data);
+     $response->setContent(json_encode($data));
+
+     return $response;
  }
 
  /**
@@ -90,6 +102,9 @@ class InstrumentController extends AbstractController
   */
  public function edit(Request $request, int $id): Response
  {
+     $response = new Response();
+     $response->headers->set('Content-Type', 'application/json');
+
      $entityManager = $this->getDoctrine()->getManager();
      $instrument = $entityManager->getRepository(Instrument::class)->find($id);
 
@@ -110,7 +125,9 @@ class InstrumentController extends AbstractController
          'description' => $instrument->getDescription(),
      ];
 
-     return $this->json($data);
+     $response->setContent(json_encode($data));
+
+     return $response;
  }
 
  /**
@@ -118,6 +135,9 @@ class InstrumentController extends AbstractController
   */
  public function delete(int $id): Response
  {
+     $response = new Response();
+     $response->headers->set('Access-Control-Allow-Origin', '*');
+
      $entityManager = $this->getDoctrine()->getManager();
      $instrument = $entityManager->getRepository(Instrument::class)->find($id);
 
@@ -128,6 +148,7 @@ class InstrumentController extends AbstractController
      $entityManager->remove($instrument);
      $entityManager->flush();
 
-     return $this->json('Deleted a instrument successfully with id ' . $id);
+     $response->setContent(json_encode('Instrument supprimé ' . $id));
+     return $response;
  }
 }
