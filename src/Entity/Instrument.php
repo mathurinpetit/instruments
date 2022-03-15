@@ -32,6 +32,16 @@ class Instrument
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $emprunte;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="User")
+    */
+    private $emprunteur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,18 @@ class Instrument
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getEmprunte(): ?bool
+    {
+        return $this->emprunte;
+    }
+
+    public function setEmprunte(bool $emprunte): self
+    {
+        $this->emprunte = $emprunte;
 
         return $this;
     }
