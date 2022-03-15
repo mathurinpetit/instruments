@@ -6,10 +6,21 @@ import {
     Route,
     Link
   } from "react-router-dom";
-import InstrumentList from "./pages/InstrumentList"
-import InstrumentCreate from "./pages/InstrumentCreate"
-import InstrumentEdit from "./pages/InstrumentEdit"
-import InstrumentShow from "./pages/InstrumentShow"
+import EmpruntListe from "./pages/EmpruntListe"
+import Sondages from "./pages/Sondages"
+
+import Admin from "./pages/Admin"
+
+import AdminInstrumentListe from "./pages/AdminInstrumentListe"
+import AdminInstrumentCreate from "./pages/AdminInstrumentCreate"
+import AdminInstrumentEdit from "./pages/AdminInstrumentEdit"
+
+import AdminSondages from "./pages/AdminSondages"
+import AdminSondagesEdit from "./pages/AdminSondagesEdit"
+
+import AdminUtilisateurListe from "./pages/AdminUtilisateurListe"
+import AdminUtilisateurCreate from "./pages/AdminUtilisateurCreate"
+import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
 
 function Main() {
     return (
@@ -17,10 +28,20 @@ function Main() {
          <header className="App-header">
            <Router>
             <Switch>
-                <Route exact path="/"  component={InstrumentList} />
-                <Route path="/create"  component={InstrumentCreate} />
-                <Route path="/edit/:id"  component={InstrumentEdit} />
-                <Route path="/show/:id"  component={InstrumentShow} />
+                <Route exact path="/"  component={EmpruntListe} />
+                <Route path="/sondages/afficher"  component={Sondages} />
+
+                <Route path="/admin/espace"  component={Admin} />
+                <Route path="/admin/instrument/liste" component={AdminInstrumentListe} />
+                <Route path="/admin/instrument/create"  component={AdminInstrumentCreate} />
+                <Route path="/admin/instrument/edit/:id"  component={AdminInstrumentEdit} />
+
+                <Route path="/admin/sondages/afficher" component={AdminSondages} />
+                <Route path="/admin/sondages/edit" component={AdminSondagesEdit} />
+
+              <Route path="/admin/utilisateur/liste" component={AdminUtilisateurListe} />
+              <Route path="/admin/utilisateur/create"  component={AdminUtilisateurCreate} />
+              <Route path="/admin/utilisateur/edit/:id"  component={AdminUtilisateurEdit} />
             </Switch>
           </Router>
        </header>

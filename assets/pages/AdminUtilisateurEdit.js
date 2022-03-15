@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 
-function InstrumentEdit() {
+function AdminUtilisateurEdit() {
+
+    const history = useHistory();
     const [id, setId] = useState(useParams().id)
     const [name, setName] = useState('');
-    const [description, setDescription] = useState('')
+    const [address, setAddress] = useState('')
     const [isSaving, setIsSaving] = useState(false)
 
-
     useEffect(() => {
-        axios.get(`/api/instrument/${id}`)
+        axios.get(`/admin/utilisateur/${id}`)
         .then(function (response) {
-            let project = response.data
-            setName(project.name);
-            setDescription(project.description);
+            let utilisateur = response.data
+            setName(utilisateur.name);
+            setAddress(utilisateur.address);
         })
         .catch(function (error) {
             Swal.fire({
@@ -32,18 +33,19 @@ function InstrumentEdit() {
 
     const handleSave = () => {
         setIsSaving(true);
-        axios.patch(`/api/instrument/${id}`, {
+        axios.patch(`/admin/utilisateur/${id}`, {
             name: name,
-            description: description
+            address: address
         })
         .then(function (response) {
             Swal.fire({
                 icon: 'success',
-                title: 'Instrument updated successfully!',
+                title: 'Utilisateur mis à jour !',
                 showConfirmButton: false,
                 timer: 1500
             })
             setIsSaving(false);
+            history.push('/admin/utilisateur/liste');
         })
         .catch(function (error) {
             Swal.fire({
@@ -52,26 +54,25 @@ function InstrumentEdit() {
                 showConfirmButton: false,
                 timer: 1500
             })
-            setIsSaving(false)
+            setIsSaving(false);
         });
     }
 
 
     return (
         <Layout>
-            <div className="container">
-                <h2 className="text-center mt-5 mb-3">Edit Instrument</h2>
+                <h2 className="text-center mt-5 mb-3">Édition d'un utilisateur</h2>
                 <div className="card">
                     <div className="card-header">
                         <Link
                             className="btn btn-outline-info float-right"
-                            to="/">View All Instruments
+                            to="/admin/utilisateur/liste">Retour à la liste
                         </Link>
                     </div>
                     <div className="card-body">
                         <form>
                             <div className="form-group">
-                                <label htmlFor="name">Name</label>
+                                <label htmlFor="name">Nom</label>
                                 <input
                                     onChange={(event)=>{setName(event.target.value)}}
                                     value={name}
@@ -81,28 +82,27 @@ function InstrumentEdit() {
                                     name="name"/>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="description">Description</label>
-                                <textarea
-                                    value={description}
-                                    onChange={(event)=>{setDescription(event.target.value)}}
+                                <label htmlFor="name">Adresse</label>
+                                <input
+                                    onChange={(event)=>{setAddress(event.target.value)}}
+                                    value={address}
+                                    type="text"
                                     className="form-control"
-                                    id="description"
-                                    rows="3"
-                                    name="description"></textarea>
+                                    id="name"
+                                    name="name"/>
                             </div>
                             <button
                                 disabled={isSaving}
                                 onClick={handleSave}
                                 type="button"
                                 className="btn btn-outline-success mt-3">
-                                Update Instrument
+                                Enregistrer
                             </button>
                         </form>
                     </div>
                 </div>
-            </div>
         </Layout>
     );
 }
 
-export default InstrumentEdit;
+export default AdminUtilisateurEdit;

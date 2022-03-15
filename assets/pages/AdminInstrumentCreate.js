@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 
-function InstrumentCreate() {
+function AdminInstrumentCreate() {
+
+    const history = useHistory();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
@@ -16,7 +18,7 @@ function InstrumentCreate() {
         formData.append("name", name)
         formData.append("type", type)
         formData.append("description", description)
-        axios.post('/api/instrument', formData)
+        axios.post('/admin/instrument', formData)
           .then(function (response) {
             Swal.fire({
                 icon: 'success',
@@ -25,9 +27,10 @@ function InstrumentCreate() {
                 timer: 1500
             })
             setIsSaving(false);
-            setName('')
-            setType('')
-            setDescription('')
+            setName('');
+            setType('');
+            setDescription('');
+            history.push('/admin/instrument/liste');
           })
           .catch(function (error) {
             Swal.fire({
@@ -42,13 +45,12 @@ function InstrumentCreate() {
 
     return (
         <Layout>
-            <div className="container">
                 <h2 className="text-center mt-5 mb-3">Ajouter un instrument</h2>
                 <div className="card">
                     <div className="card-header">
                         <Link
                             className="btn btn-outline-info float-right"
-                            to="/">Voir les instruments
+                            to="/admin/instrument/liste">Retour à la liste
                         </Link>
                     </div>
                     <div className="card-body">
@@ -107,9 +109,8 @@ function InstrumentCreate() {
                         </form>
                     </div>
                 </div>
-            </div>
         </Layout>
     );
 }
 
-export default InstrumentCreate;
+export default AdminInstrumentCreate;
