@@ -1,5 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
-
+var dotenv = require('dotenv');
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -54,6 +54,19 @@ Encore
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = 3;
+    })
+    .configureDefinePlugin(options => {
+        const env = dotenv.config();
+
+
+        if (env.error) {
+            throw env.error;
+        }
+
+        options['process.env'].API_URL = JSON.stringify(env.parsed.API_URL);
+        options['process.env'].API_USERNAME = JSON.stringify(env.parsed.API_USERNAME);
+        options['process.env'].API_PASSWORD = JSON.stringify(env.parsed.API_PASSWORD);
+        options['process.env'].SKIP_PREFLIGHT_CHECK = JSON.stringify(env.parsed.SKIP_PREFLIGHT_CHECK);
     })
 
     // enables Sass/SCSS support

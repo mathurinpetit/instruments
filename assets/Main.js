@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Buffer} from 'buffer';
 import {
     HashRouter as Router,
     Switch,
@@ -23,6 +24,13 @@ import AdminUtilisateurCreate from "./pages/AdminUtilisateurCreate"
 import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
 
 function Main() {
+  let axiosDefaults = require('axios/lib/defaults');
+  axiosDefaults.baseURL = process.env.API_URL;
+  const username = process.env.API_USERNAME;
+  const password = process.env.API_PASSWORD;
+  
+  axiosDefaults.headers.common['Authorization'] = 'Basic ' + Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
+
     return (
        <div className="App">
          <header className="App-header">
