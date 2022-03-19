@@ -3,14 +3,23 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+import UtilisateurModal from "./UtilisateurModal"
 
 function EmpruntListe() {
-
+    const cookies = new Cookies();
     const  [instrumentsList, setInstrumentList] = useState([])
     const [isSaving, setIsSaving] = useState(false)
+    const [userCookie, setUserCookie] = useState(cookies.get('utilisateur'))
+    const [utilisateurName, setUtilisateurName] = useState('')
+    const [utilisateurAdresse, setUtilisateurAdresse] = useState('')
+
 
     useEffect(() => {
-        fetchInstrumentList()
+        fetchInstrumentList();
+        if(userCookie){
+          fetchUtilisateur(userCookie);
+        }
     }, [])
 
     const fetchInstrumentList = () => {
@@ -23,10 +32,24 @@ function EmpruntListe() {
         })
     }
 
-
+    const fetchUtilisateur = (id) => {
+      axios.get(`/identification/utilisateur/${id}`)
+      .then(function (response) {
+          let utilisateur = response.data;
+          if(utilisateur !== 'false'){
+            setUtilisateurName(utilisateur.name);
+            setUtilisateurAdresse(utilisateur.address);
+          }else{
+            cookies.set('utilisateur', '', { path: '/' });
+            window.location.reload();
+          }
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+    }
 
     const handleAction = (id,emprunte) => {
-        // texte = { emprunte ? "Voulez-vous rendre l'instrument ?" : "Voulez-vous emprunter l'instrument ?" };
         Swal.fire({
             title: emprunte ? "Je rend ?" : "J'emprunte ?",
             text: emprunte ? "Voulez-vous rendre l'instrument ?" : "Voulez-vous emprunter l'instrument ?",
@@ -91,6 +114,15 @@ function EmpruntListe() {
               </li>
             </ul>
           </header>
+          {userCookie
+                      ? <UtilisateurModal user={userCookie}
+                                          linkText="Changer d'utilisateur"
+                                          title="Bonjour on sait qui tu es" />
+                      : <UtilisateurModal user={userCookie}
+                                          linkText="Qui suis-je ?"
+                                          title="Bonjour, qui êtes-vous ?" />
+          }
+          <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} - {utilisateurAdresse}</h2>
           <h2 className="text-center mt-5 mb-3">Instruments</h2>
             <div className="card">
               <div className="card-body">
