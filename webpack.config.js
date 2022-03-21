@@ -67,7 +67,18 @@ Encore
         options['process.env'].API_USERNAME = JSON.stringify(env.parsed.API_USERNAME);
         options['process.env'].API_PASSWORD = JSON.stringify(env.parsed.API_PASSWORD);
         options['process.env'].SKIP_PREFLIGHT_CHECK = JSON.stringify(env.parsed.SKIP_PREFLIGHT_CHECK);
-    })
+    }).copyFiles({
+         from: './assets/images',
+
+         // optional target path, relative to the output dir
+         to: '../[path][name].[ext]',
+
+         // if versioning is enabled, add the file hash too
+         //to: 'images/[path][name].[hash:8].[ext]',
+
+         // only copy files matching this pattern
+         //pattern: /\.(png|jpg|jpeg)$/
+   })
 
     // enables Sass/SCSS support
     //.enableSassLoader()
