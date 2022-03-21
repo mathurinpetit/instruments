@@ -106,7 +106,6 @@ function UtilisateurModal(props) {
                   timer: 1500
               })
               setIsSaving(false);
-              handleClose();
         });
       }else{
         axios.patch(`/identification/utilisateur/${name}`, { address: address })
