@@ -31,7 +31,8 @@ class IdentificationController extends AbstractController
        foreach ($utilisateurs as $utilisateur) {
           $data[] = [
               'value' => $utilisateur->getId(),
-              'label' => $utilisateur->getNom()
+              'label' => $utilisateur->getNom(),
+              'adresse' => $utilisateur->getAddress()
           ];
        }
        $response->setContent(json_encode($data));

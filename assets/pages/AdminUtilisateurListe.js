@@ -9,7 +9,8 @@ import {
   } from "react-router-dom";
 
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { Badge } from 'react-bootstrap';
 import AdminUtilisateurCreate from "./AdminUtilisateurCreate"
 import AdminUtilisateurEdit from "./AdminUtilisateurEdit"
 
@@ -107,6 +108,7 @@ function AdminUtilisateurListe() {
                               <tr>
                                   <th>Nom</th>
                                   <th>Adresse</th>
+                                  <th>Instruments</th>
                                   <th width="240px">Action</th>
                               </tr>
                           </thead>
@@ -116,6 +118,12 @@ function AdminUtilisateurListe() {
                                       <tr key={key}>
                                           <td>{utilisateur.name}</td>
                                           <td>{utilisateur.address}</td>
+                                          <td>
+                                            {utilisateur.instruments.map((instrument, k)=>{
+                                                return (
+                                                  <Badge pill bg="secondary"  key={k} >{instrument.nom}</Badge>
+                                                ) }) }
+                                          </td>
                                           <td>
                                               <Link
                                                   className="btn btn-outline-success mx-1"

@@ -23,7 +23,11 @@ function UtilisateurModal(props) {
     setShow(false);
     window.location.reload();
   }
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    setAddress(props.userAddress);
+  }
+
   const cookies = new Cookies();
 
   useEffect(() => {
@@ -51,31 +55,26 @@ function UtilisateurModal(props) {
       // console.log(newValue);
       // console.log(`action: ${actionMeta.action}`);
       // console.groupEnd();
+
       if(`${actionMeta.action}` == "create-option"){
         setName(newValue.value);
+        setAddress('');
         setIsNew(true);
       }
       if(`${actionMeta.action}` == "select-option"){
         setName(newValue.value);
+        setAddress(newValue.adresse);
         setIsNew(false);
       }
       if(`${actionMeta.action}` == "clear"){
         setName('');
+        setAddress('');
         setIsNew(false);
       }
-      console.log(name,isNew);
     };
 
   const handleInputNomChange = (inputValue, actionMeta) => {
-      // console.group('Input Changed');
-      // console.log(inputValue);
-      // console.log(`action: ${actionMeta.action}`);
-      // console.groupEnd();
-      // if(${actionMeta.action} == "menu-close"){
-      //   console.log(inputValue);
-      // }
-
-    };
+  };
 
   const handleSave = () => {
       setIsSaving(true);
@@ -112,12 +111,6 @@ function UtilisateurModal(props) {
       }else{
         axios.patch(`/identification/utilisateur/${name}`, { address: address })
           .then(function (response) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Utilisateur choisi !',
-                showConfirmButton: false,
-                timer: 1500
-            })
             cookies.set('utilisateur', name, { path: '/' });
             setIsSaving(false);
             handleClose();
@@ -150,7 +143,6 @@ function UtilisateurModal(props) {
                 <div className="row">
                     <div className="col-sm">
                       <div className="form-group">
-                          <label htmlFor="name">Nom</label>
                             <CreatableSelect
                               isClearable
                               onChange={handleNomChange}
@@ -158,19 +150,23 @@ function UtilisateurModal(props) {
                               options={utilisateursOptions}
                               id="name"
                               name="name"
+                              placeholder="votre prénom"
+                              formatCreateLabel={(inputText) => `"Création : ${inputText}"`}
+                              defaultValue={{ value: props.user, label: props.userName }}
                             />
                       </div>
                     </div>
                     <div className="col-sm">
                       <div className="form-group">
-                      <label htmlFor="name">Adresse</label>
                       <input
                           onChange={(event)=>{setAddress(event.target.value)}}
                           value={address}
                           type="text"
                           className="form-control"
-                          id="name"
-                          name="name"/>
+                          id="adresse"
+                          name="adresse"
+                          placeholder="votre adresse"
+                          />
                       </div>
                     </div>
                   </div>

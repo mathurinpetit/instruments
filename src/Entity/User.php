@@ -6,6 +6,8 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -47,6 +49,12 @@ class User
     * @ORM\OneToMany(targetEntity="Instrument", mappedBy="emprunteur")
     */
    private $instruments;
+
+
+    public function __construct()
+    {
+       $this->instruments = new ArrayCollection();
+    }
 
 
     public function getId(): ?string
@@ -100,5 +108,13 @@ class User
         $this->lon = $lon;
 
         return $this;
+    }
+
+    /**
+   * @return Collection|Instrument[]
+   */
+    public function getInstruments(): Collection
+    {
+        return $this->instruments;
     }
 }

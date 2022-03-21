@@ -170,10 +170,17 @@ public function utilisateurIndex(): Response
 
     $data = [];
     foreach ($utilisateurs as $utilisateur) {
-       $data[] = [
+      $dataInstruments = array();
+      foreach ($utilisateur->getInstruments() as $instrument) {
+        $dataInstruments[] =[
+            'nom' =>$instrument->getName()
+          ];
+      }
+      $data[] = [
            'id' => $utilisateur->getId(),
            'name' => $utilisateur->getNom(),
-           'address' => $utilisateur->getAddress()
+           'address' => $utilisateur->getAddress(),
+           'instruments' => $dataInstruments
        ];
     }
     $response->setContent(json_encode($data));
@@ -220,7 +227,7 @@ public function utilisateurShow(string $id): Response
 
    if (!$utilisateur) {
 
-       return $this->json('No instrument found for id' . $id, 404);
+       return $this->json('No utilisateur found for id' . $id, 404);
    }
 
    $data =  [
@@ -279,6 +286,12 @@ public function utilisateurDelete(string $id): Response
 
     if (!$utilisateur) {
         return $this->json('No utilisateur found for id' . $id, 404);
+    }
+
+    if(count($utilisateur->getInstruments())){
+      foreach ($utilisateur->getInstruments() as $instrument) {
+        $instrument->rendre();
+      }
     }
 
     $entityManager->remove($utilisateur);

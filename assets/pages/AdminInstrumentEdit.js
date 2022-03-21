@@ -15,9 +15,9 @@ function AdminInstrumentEdit() {
     useEffect(() => {
         axios.get(`/admin/instrument/${id}`)
         .then(function (response) {
-            let project = response.data
-            setName(project.name);
-            setDescription(project.description);
+            let instrument = response.data
+            setName(instrument.name);
+            setDescription(instrument.description);
         })
         .catch(function (error) {
             Swal.fire({

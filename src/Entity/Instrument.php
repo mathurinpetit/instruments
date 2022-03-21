@@ -59,6 +59,18 @@ class Instrument
         return $this;
     }
 
+    public function getEmprunteur(): ?User
+    {
+        return $this->emprunteur;
+    }
+
+    public function setEmprunteur($emprunteur): self
+    {
+        $this->emprunteur = $emprunteur;
+
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -91,6 +103,34 @@ class Instrument
     public function setEmprunte(bool $emprunte): self
     {
         $this->emprunte = $emprunte;
+
+        return $this;
+    }
+
+    public function rendre(){
+
+        $this->setEmprunte(false);
+        $this->setEmprunteur(null);
+
+        return $this;
+    }
+
+    public function emprunteRendre(User $user)
+    {
+        $emprunte = $this->getEmprunte();
+
+        if($emprunte && ($user->getId()!=$this->getEmprunteur()->getId())){
+          return null;
+        }
+
+        if($emprunte && $user->getId()==$this->getEmprunteur()->getId()){
+          $this->rendre();
+        }
+
+        if(!$emprunte){
+          $this->setEmprunte(true);
+          $this->setEmprunteur($user);
+        }
 
         return $this;
     }

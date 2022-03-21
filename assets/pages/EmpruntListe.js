@@ -50,6 +50,7 @@ function EmpruntListe() {
     }
 
     const handleAction = (id,emprunte) => {
+        const idUser = cookies.get('utilisateur');
         Swal.fire({
             title: emprunte ? "Je rend ?" : "J'emprunte ?",
             text: emprunte ? "Voulez-vous rendre l'instrument ?" : "Voulez-vous emprunter l'instrument ?",
@@ -61,14 +62,23 @@ function EmpruntListe() {
           }).then((result) => {
               if (result.isConfirmed) {
                 setIsSaving(true);
-                axios.patch(`/emprunt/instrument/${id}`)
+                axios.patch(`/emprunt/instrument/${id}`,{ idUser : cookies.get('utilisateur') })
                 .then(function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: emprunte ? "L'instrument est rendu !" : "L'instrument est maintenant emprunté !",
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    if(response.data.success){
+                      Swal.fire({
+                          icon: 'success',
+                          title: emprunte ? ""+response.data.type+" "+response.data.name+" rendu !" : ""+response.data.type+" "+response.data.name+" emprunté !",
+                          showConfirmButton: false,
+                          timer: 1500
+                      });
+                    }else{
+                      Swal.fire({
+                          icon: 'error',
+                          title: response.data.text,
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
+                    }
                     setIsSaving(false);
                     fetchInstrumentList();
                 })
@@ -115,27 +125,36 @@ function EmpruntListe() {
             </ul>
           </header>
           {userCookie
-                      ? <UtilisateurModal user={userCookie}
-                                          linkText="Changer d'utilisateur"
-                                          title="Bonjour on sait qui tu es" />
-                      : <UtilisateurModal user={userCookie}
+                      ? <UtilisateurModal user={userCookie} userName={utilisateurName} userAddress={utilisateurAdresse}
+                                          linkText="Changer d'utilisateur ou d'adresse"
+                                          title="Changer d'utilisateur ou d'adresse" />
+                                        : <UtilisateurModal user="" userName="" userAddress=""
                                           linkText="Qui suis-je ?"
                                           title="Bonjour, qui êtes-vous ?" />
           }
-          <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} - {utilisateurAdresse}</h2>
+          <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
+          <h4 className="text-center mt-5 mb-3">{utilisateurAdresse}&nbsp;
+            <button type="button" className="btn btn-sm btn-primary">
+              <ion-icon name="map-outline"></ion-icon>
+            </button>
+          </h4>
           <h2 className="text-center mt-5 mb-3">Instruments</h2>
             <div className="card">
               <div className="card-body">
                 <div className="list-group">
                 {instrumentsList.map((instrument, key)=>{
+                 const emprunteurIsNotMe = (instrument.emprunte && (instrument.emprunteurId != cookies.get('utilisateur')));
                  return (
-                    <div  key={key} onClick={()=>handleAction(instrument.id,instrument.emprunte)} className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                    <div key={key} onClick={()=>handleAction(instrument.id,instrument.emprunte)}
+                            className={ emprunteurIsNotMe ? "disabled list-group-item list-group-item-action d-flex gap-3 py-3 " : "list-group-item list-group-item-action d-flex gap-3 py-3 " }
+                            aria-current="true">
                       <div className="d-flex gap-2 w-100 justify-content-between">
                         <div>
                           <h6 className="mb-0">{instrument.name}</h6>
                           <p className="mb-0 opacity-75">{instrument.description}</p>
                         </div>
                         <small className="opacity-50 text-nowrap">
+                          <span className="mb-0">{instrument.emprunte ? 'Actuellement emprunté par : ' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
                           <span className={(instrument.emprunte ? 'emprunte dot' : 'libre dot')}></span>
                         </small>
                       </div>
