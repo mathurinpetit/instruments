@@ -27,9 +27,9 @@ import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
 function Main() {
 
   let axiosDefaults = require('axios/lib/defaults');
-  axiosDefaults.baseURL = process.env.API_URL;
-  const username = process.env.API_USERNAME;
-  const password = process.env.API_PASSWORD;
+  axiosDefaults.baseURL = process.env.REACT_APP_API_URL;
+  const username = process.env.REACT_APP_API_USERNAME;
+  const password = process.env.REACT_APP_API_PASSWORD;
 
   axiosDefaults.headers.common['Authorization'] = 'Basic ' + Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
 

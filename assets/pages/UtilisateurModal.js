@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import Layout from "../components/Layout";
 import Swal from 'sweetalert2';
@@ -9,19 +9,25 @@ import CreatableSelect from 'react-select/creatable';
 import { ActionMeta, OnChangeValue } from 'react-select';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
-const SEARCH_URI = '';
 
 function UtilisateurModal(props) {
+
+
+  const REACT_APP_ADRESSE_API_URL = process.env.REACT_APP_ADRESSE_API_URL;
+  const REACT_APP_ADRESSE_API_PARAMS = process.env.REACT_APP_ADRESSE_API_PARAMS;
 
   const history = useHistory();
   const [selectedOption, setSelectedOption] = useState(null);
   const [utilisateursOptions, setUtilisateursOptions] = useState([])
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
   const [isSaving, setIsSaving] = useState(false)
   const [isNew, setIsNew] = useState(false);
   const [show, setShow] = useState(false);
 
+  const ref = useRef();
+
+  const [address, setAddress] = useState('');
+  const [selectedAdresse, setSelectedAdresse] = useState([]);
   const [isAdresseLoading, setIsAdresseLoading] = useState(false);
   const [optionsAdresse, setOptionsAdresse] = useState([]);
 
@@ -32,7 +38,27 @@ function UtilisateurModal(props) {
   }
   const handleShow = () => {
     setShow(true);
-    setAddress(props.userAddress);
+    if(props.userAddress){
+      setIsAdresseLoading(true);
+      axios.get(`${REACT_APP_ADRESSE_API_URL}?${REACT_APP_ADRESSE_API_PARAMS}&q=${props.userAddress}`, {transformRequest: (data, headers) => {
+        delete headers.common['Authorization'];
+        return data;
+      }
+    })
+    .then(function (response){
+      const items = response.data.features;
+      const options = items.map((i) => ({
+        id: i.properties.id,
+        adresse: i.properties.label,
+      }));
+      setOptionsAdresse(options);
+      setSelectedAdresse(options.slice(0,1));
+      setAddress(options.slice(0,1));
+      console.log(options, options[0].adresse);
+      setIsAdresseLoading(false);
+    });
+    }
+
   }
 
   const cookies = new Cookies();
@@ -86,13 +112,16 @@ function UtilisateurModal(props) {
   const handleSearchAdresse = (query) => {
   setIsAdresseLoading(true);
 
-  axios.get(`${SEARCH_URI}?type=housenumber&autocomplete=1&limit=50&q=${query}`)
+  axios.get(`${REACT_APP_ADRESSE_API_URL}?${REACT_APP_ADRESSE_API_PARAMS}&q=${query}`, {transformRequest: (data, headers) => {
+        delete headers.common['Authorization'];
+        return data;
+        }
+      })
     .then(function (response){
-      const items = response.data.items;
+      const items = response.data.features;
       const options = items.map((i) => ({
-        avatar_url: i.avatar_url,
-        id: i.id,
-        adresse: i.login,
+        id: i.properties.id,
+        adresse: i.properties.label,
       }));
       setOptionsAdresse(options);
       setIsAdresseLoading(false);
@@ -102,7 +131,7 @@ function UtilisateurModal(props) {
   const handleSave = () => {
       setIsSaving(true);
       let formData = new FormData()
-        formData.append("address", address)
+        formData.append("address",address.selected[0].adresse)
         formData.append("name", name)
       if(isNew){
         axios.post('/identification/utilisateur', formData)
@@ -196,18 +225,11 @@ function UtilisateurModal(props) {
                         minLength={3}
                         onSearch={handleSearchAdresse}
                         options={optionsAdresse}
+                        defaultSelected={selectedAdresse}
                         placeholder="Votre adresse..."
+                        ref={ref}
                         renderMenuItemChildren={(option, props) => (
                           <React.Fragment>
-                            <img
-                              alt={option.adresse}
-                              src={option.avatar_url}
-                              style={{
-                                height: '24px',
-                                marginRight: '10px',
-                                width: '24px',
-                              }}
-                            />
                             <span>{option.adresse}</span>
                           </React.Fragment>
                         )}
