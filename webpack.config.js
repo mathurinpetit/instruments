@@ -63,10 +63,12 @@ Encore
             throw env.error;
         }
 
-        options['process.env'].API_URL = JSON.stringify(env.parsed.API_URL);
-        options['process.env'].API_USERNAME = JSON.stringify(env.parsed.API_USERNAME);
-        options['process.env'].API_PASSWORD = JSON.stringify(env.parsed.API_PASSWORD);
         options['process.env'].SKIP_PREFLIGHT_CHECK = JSON.stringify(env.parsed.SKIP_PREFLIGHT_CHECK);
+        options['process.env'].REACT_APP_API_URL = JSON.stringify(env.parsed.REACT_APP_API_URL);
+        options['process.env'].REACT_APP_API_USERNAME = JSON.stringify(env.parsed.REACT_APP_API_USERNAME);
+        options['process.env'].REACT_APP_API_PASSWORD = JSON.stringify(env.parsed.REACT_APP_API_PASSWORD);
+        options['process.env'].REACT_APP_ADRESSE_API_URL = JSON.stringify(env.parsed.REACT_APP_ADRESSE_API_URL);
+        options['process.env'].REACT_APP_ADRESSE_API_PARAMS = JSON.stringify(env.parsed.REACT_APP_ADRESSE_API_PARAMS);
     }).copyFiles({
          from: './assets/images',
 
