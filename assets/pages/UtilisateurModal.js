@@ -24,11 +24,15 @@ function UtilisateurModal(props) {
   const [isNew, setIsNew] = useState(false);
   const [show, setShow] = useState(false);
 
+
   const [checked, setChecked] = useState(false);
   const [address, setAddress] = useState("");
   const [selectedAdresse, setSelectedAdresse] = useState([]);
   const [isAdresseLoading, setIsAdresseLoading] = useState(false);
   const [optionsAdresse, setOptionsAdresse] = useState([]);
+
+  const [lon, setLon] = useState(null);
+  const [lat, setLat] = useState(null);
 
   const typeahead = useRef(null);
 
@@ -64,10 +68,13 @@ const moveSelectionOfAdresse = (adresseStr) => {
       const options = items.map((i) => ({
         id: i.properties.id,
         adresse: i.properties.label,
+        coordinates: i.geometry.coordinates
       }));
       setOptionsAdresse(options);
       setSelectedAdresse(options.slice(0,1));
       setAddress(options[0].adresse);
+      setLon(options[0].coordinates[0]);
+      setLat(options[0].coordinates[1]);
       setIsAdresseLoading(false);
     });
 }
@@ -137,10 +144,16 @@ const moveSelectionOfAdresse = (adresseStr) => {
       const options = items.map((i) => ({
         id: i.properties.id,
         adresse: i.properties.label,
+        coordinates: i.geometry.coordinates
       }));
-      setOptionsAdresse(options);
-      setAddress(options[0].adresse);
-      setIsAdresseLoading(false);
+
+      if(options.length){
+        setOptionsAdresse(options);
+        setAddress(options[0].adresse);
+        setLon(options[0].coordinates[0]);
+        setLat(options[0].coordinates[1]);
+        setIsAdresseLoading(false);
+        }
     });
 };
 
@@ -150,6 +163,8 @@ const moveSelectionOfAdresse = (adresseStr) => {
         let formData = new FormData()
         formData.append("address",address.selected[0].adresse)
         formData.append("name", name)
+        formData.append("lon", lon)
+        formData.append("lat", lat)
         axios.post('/identification/utilisateur', formData)
             .then(function (response) {
               let utilisateur = response.data
@@ -176,9 +191,8 @@ const moveSelectionOfAdresse = (adresseStr) => {
               setIsSaving(false);
         });
       }else{
-        console.log(address);
         const adresseTmp = (address.selected === undefined)? address : address.selected[0].adresse;
-        axios.patch(`/identification/utilisateur/${name}`, { address: adresseTmp })
+        axios.patch(`/identification/utilisateur/${name}`, { address: adresseTmp , lon : lon, lat: lat})
           .then(function (response) {
             cookies.set('utilisateur', name, { path: '/' });
             setIsSaving(false);

@@ -8,11 +8,13 @@ import UtilisateurModal from "./UtilisateurModal"
 
 function EmpruntListe() {
     const cookies = new Cookies();
-    const  [instrumentsList, setInstrumentList] = useState([])
+    const [instrumentsList, setInstrumentList] = useState([])
     const [isSaving, setIsSaving] = useState(false)
     const [userCookie, setUserCookie] = useState(cookies.get('utilisateur'))
     const [utilisateurName, setUtilisateurName] = useState('')
     const [utilisateurAdresse, setUtilisateurAdresse] = useState('')
+    const [utilisateurLat, setUtilisateurLat] = useState('')
+    const [utilisateurLon, setUtilisateurLon] = useState('')
 
 
     useEffect(() => {
@@ -39,6 +41,8 @@ function EmpruntListe() {
           if(utilisateur !== 'false'){
             setUtilisateurName(utilisateur.name);
             setUtilisateurAdresse(utilisateur.address);
+            setUtilisateurLat(utilisateur.lat);
+            setUtilisateurLon(utilisateur.lon);
           }else{
             cookies.set('utilisateur', '', { path: '/' });
             window.location.reload();
@@ -133,7 +137,7 @@ function EmpruntListe() {
                                           title="Bonjour, qui êtes-vous ?" />
           }
           <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
-          <h4 className="text-center mt-5 mb-3">{utilisateurAdresse}&nbsp;
+          <h4 className="text-center mt-5 mb-3">{utilisateurAdresse}&nbsp;{utilisateurLat}x{utilisateurLon}
             <button type="button" className="btn btn-sm btn-primary">
               <ion-icon name="map-outline"></ion-icon>
             </button>
