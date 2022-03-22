@@ -138,9 +138,9 @@ function EmpruntListe() {
           }
           <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
           <h4 className="text-center mt-5 mb-3">{utilisateurAdresse}&nbsp;{utilisateurLat}x{utilisateurLon}
-            <button type="button" className="btn btn-sm btn-primary">
+            <a className="btn btn-sm btn-primary" target="_blank" href={"https://maps.google.com/?q="+utilisateurLat+","+utilisateurLon} >
               <ion-icon name="map-outline"></ion-icon>
-            </button>
+            </a>
           </h4>
           <h2 className="text-center mt-5 mb-3">Instruments</h2>
             <div className="card">
