@@ -28,6 +28,7 @@
         "dotenv": "^16.0.0",
         "file-loader": "^6.2.0",
         "react-bootstrap": "^2.2.1",
+        "react-bootstrap-typeahead": "^6.0.0-alpha.9",
         "react-linkify": "^1.0.0-alpha",
         "react-router-dom": "^5.2.0",
         "react-select": "^5.2.2",

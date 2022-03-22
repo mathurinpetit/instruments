@@ -7,6 +7,9 @@ import {Modal, Button} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import CreatableSelect from 'react-select/creatable';
 import { ActionMeta, OnChangeValue } from 'react-select';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+
+const SEARCH_URI = '';
 
 function UtilisateurModal(props) {
 
@@ -14,10 +17,14 @@ function UtilisateurModal(props) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [utilisateursOptions, setUtilisateursOptions] = useState([])
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState('');
   const [isSaving, setIsSaving] = useState(false)
   const [isNew, setIsNew] = useState(false);
   const [show, setShow] = useState(false);
+
+  const [isAdresseLoading, setIsAdresseLoading] = useState(false);
+  const [optionsAdresse, setOptionsAdresse] = useState([]);
+
 
   const handleClose = () => {
     setShow(false);
@@ -76,6 +83,22 @@ function UtilisateurModal(props) {
   const handleInputNomChange = (inputValue, actionMeta) => {
   };
 
+  const handleSearchAdresse = (query) => {
+  setIsAdresseLoading(true);
+
+  axios.get(`${SEARCH_URI}?type=housenumber&autocomplete=1&limit=50&q=${query}`)
+    .then(function (response){
+      const items = response.data.items;
+      const options = items.map((i) => ({
+        avatar_url: i.avatar_url,
+        id: i.id,
+        adresse: i.login,
+      }));
+      setOptionsAdresse(options);
+      setIsAdresseLoading(false);
+    });
+};
+
   const handleSave = () => {
       setIsSaving(true);
       let formData = new FormData()
@@ -108,7 +131,7 @@ function UtilisateurModal(props) {
               setIsSaving(false);
         });
       }else{
-        axios.patch(`/identification/utilisateur/${name}`, { address: address })
+        axios.patch(`/identification/utilisateur/${name}`, { address: address.selected[0].adresse })
           .then(function (response) {
             cookies.set('utilisateur', name, { path: '/' });
             setIsSaving(false);
@@ -127,6 +150,8 @@ function UtilisateurModal(props) {
       }
   }
 
+  const filterBy = () => true;
+
   return (
     <div>
       <Button className="utilisateur-popup" onClick={handleShow}>
@@ -142,33 +167,54 @@ function UtilisateurModal(props) {
                 <div className="row">
                     <div className="col-sm">
                       <div className="form-group">
-                            <CreatableSelect
-                              isClearable
-                              onChange={handleNomChange}
-                              onInputChange={handleInputNomChange}
-                              options={utilisateursOptions}
-                              id="name"
-                              name="name"
-                              placeholder="votre prénom"
-                              formatCreateLabel={(inputText) => `"Création : ${inputText}"`}
-                              defaultValue={{ value: props.user, label: props.userName }}
-                            />
+                              <CreatableSelect
+                                isClearable
+                                onChange={handleNomChange}
+                                onInputChange={handleInputNomChange}
+                                options={utilisateursOptions}
+                                id="name"
+                                name="name"
+                                placeholder="votre prénom"
+                                formatCreateLabel={(inputText) => `"Création : ${inputText}"`}
+                                defaultValue={ props.user &&
+                                    { value: props.user, label: props.userName }
+                                  }
+                                />
                       </div>
                     </div>
+
                     <div className="col-sm">
                       <div className="form-group">
-                      <input
-                          onChange={(event)=>{setAddress(event.target.value)}}
-                          value={address}
-                          type="text"
-                          className="form-control"
-                          id="adresse"
-                          name="adresse"
-                          placeholder="votre adresse"
-                          />
-                      </div>
+                      <AsyncTypeahead
+                        id="adresse"
+                        name="adresse"
+                        onChange={(s)=>{setAddress({ selected: s})}}
+                        value={address}
+                        filterBy={filterBy}
+                        isLoading={isAdresseLoading}
+                        labelKey="adresse"
+                        minLength={3}
+                        onSearch={handleSearchAdresse}
+                        options={optionsAdresse}
+                        placeholder="Votre adresse..."
+                        renderMenuItemChildren={(option, props) => (
+                          <React.Fragment>
+                            <img
+                              alt={option.adresse}
+                              src={option.avatar_url}
+                              style={{
+                                height: '24px',
+                                marginRight: '10px',
+                                width: '24px',
+                              }}
+                            />
+                            <span>{option.adresse}</span>
+                          </React.Fragment>
+                        )}
+                      />
                     </div>
                   </div>
+              </div>
         </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
