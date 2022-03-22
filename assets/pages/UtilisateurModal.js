@@ -24,13 +24,17 @@ function UtilisateurModal(props) {
   const [isNew, setIsNew] = useState(false);
   const [show, setShow] = useState(false);
 
-  const ref = useRef();
-
-  const [address, setAddress] = useState('');
+  const [checked, setChecked] = useState(false);
+  const [address, setAddress] = useState("");
   const [selectedAdresse, setSelectedAdresse] = useState([]);
   const [isAdresseLoading, setIsAdresseLoading] = useState(false);
   const [optionsAdresse, setOptionsAdresse] = useState([]);
 
+  const typeahead = useRef(null);
+
+  const handleChangeCheckbox = () => {
+    setChecked(!checked);
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -39,8 +43,18 @@ function UtilisateurModal(props) {
   const handleShow = () => {
     setShow(true);
     if(props.userAddress){
-      setIsAdresseLoading(true);
-      axios.get(`${REACT_APP_ADRESSE_API_URL}?${REACT_APP_ADRESSE_API_PARAMS}&q=${props.userAddress}`, {transformRequest: (data, headers) => {
+      setChecked(false);
+      setName(props.user)
+      moveSelectionOfAdresse(props.userAddress)
+    }else{
+      setChecked(true);
+    }
+
+  }
+
+const moveSelectionOfAdresse = (adresseStr) => {
+
+      axios.get(`${REACT_APP_ADRESSE_API_URL}?${REACT_APP_ADRESSE_API_PARAMS}&q=${adresseStr}&limit=1`, {transformRequest: (data, headers) => {
         delete headers.common['Authorization'];
         return data;
       }
@@ -53,13 +67,10 @@ function UtilisateurModal(props) {
       }));
       setOptionsAdresse(options);
       setSelectedAdresse(options.slice(0,1));
-      setAddress(options.slice(0,1));
-      console.log(options, options[0].adresse);
+      setAddress(options[0].adresse);
       setIsAdresseLoading(false);
     });
-    }
-
-  }
+}
 
   const cookies = new Cookies();
 
@@ -92,16 +103,20 @@ function UtilisateurModal(props) {
       if(`${actionMeta.action}` == "create-option"){
         setName(newValue.value);
         setAddress('');
+        typeahead.current?.clear();
         setIsNew(true);
       }
       if(`${actionMeta.action}` == "select-option"){
         setName(newValue.value);
+        setChecked(false);
+        moveSelectionOfAdresse(newValue.adresse);
         setAddress(newValue.adresse);
         setIsNew(false);
       }
       if(`${actionMeta.action}` == "clear"){
         setName('');
         setAddress('');
+        typeahead.current?.clear();
         setIsNew(false);
       }
     };
@@ -112,7 +127,7 @@ function UtilisateurModal(props) {
   const handleSearchAdresse = (query) => {
   setIsAdresseLoading(true);
 
-  axios.get(`${REACT_APP_ADRESSE_API_URL}?${REACT_APP_ADRESSE_API_PARAMS}&q=${query}`, {transformRequest: (data, headers) => {
+  axios.get(`${REACT_APP_ADRESSE_API_URL}?${REACT_APP_ADRESSE_API_PARAMS}&q=${query}&limit=10`, {transformRequest: (data, headers) => {
         delete headers.common['Authorization'];
         return data;
         }
@@ -124,16 +139,17 @@ function UtilisateurModal(props) {
         adresse: i.properties.label,
       }));
       setOptionsAdresse(options);
+      setAddress(options[0].adresse);
       setIsAdresseLoading(false);
     });
 };
 
   const handleSave = () => {
       setIsSaving(true);
-      let formData = new FormData()
+      if(isNew){
+        let formData = new FormData()
         formData.append("address",address.selected[0].adresse)
         formData.append("name", name)
-      if(isNew){
         axios.post('/identification/utilisateur', formData)
             .then(function (response) {
               let utilisateur = response.data
@@ -160,7 +176,9 @@ function UtilisateurModal(props) {
               setIsSaving(false);
         });
       }else{
-        axios.patch(`/identification/utilisateur/${name}`, { address: address.selected[0].adresse })
+        console.log(address);
+        const adresseTmp = (address.selected === undefined)? address : address.selected[0].adresse;
+        axios.patch(`/identification/utilisateur/${name}`, { address: adresseTmp })
           .then(function (response) {
             cookies.set('utilisateur', name, { path: '/' });
             setIsSaving(false);
@@ -211,10 +229,41 @@ function UtilisateurModal(props) {
                                 />
                       </div>
                     </div>
-
+                </div>
+                <div className="row">
+                    <div className="col-sm">
+                      <br/>
+                      <div className="form-group">
+                      <label>
+                        Mettre à jour l'adresse ? {"  "}
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={handleChangeCheckbox}
+                          />
+                        </label>
+                        <br/>
+                      </div>
+                    </div>
+                  </div>
+                  {!checked &&
+                  <div className="row">
+                      <div className="col-sm">
+                        <div className="form-group">
+                        <input
+                          type="text"
+                          className = "form-control"
+                          value={address}
+                          disabled="disabled" />
+                        </div>
+                      </div>
+                  </div>
+                  }
+                  {checked &&
+                  <div className="row">
                     <div className="col-sm">
                       <div className="form-group">
-                      <AsyncTypeahead
+                      <AsyncTypeahead ref={typeahead}
                         id="adresse"
                         name="adresse"
                         onChange={(s)=>{setAddress({ selected: s})}}
@@ -227,7 +276,6 @@ function UtilisateurModal(props) {
                         options={optionsAdresse}
                         defaultSelected={selectedAdresse}
                         placeholder="Votre adresse..."
-                        ref={ref}
                         renderMenuItemChildren={(option, props) => (
                           <React.Fragment>
                             <span>{option.adresse}</span>
@@ -236,7 +284,9 @@ function UtilisateurModal(props) {
                       />
                     </div>
                   </div>
-              </div>
+                </div>
+                }
+
         </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
