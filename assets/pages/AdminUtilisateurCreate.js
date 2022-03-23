@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import Menu from "./Menu"
 
 function AdminUtilisateurCreate() {
 
