@@ -4,6 +4,7 @@ import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import Menu from "./Menu"
+import InstrumentsType from "./InstrumentsType"
 
 function AdminInstrumentCreate() {
 
@@ -79,14 +80,13 @@ function AdminInstrumentCreate() {
                                         id="type"
                                         name="type"
                                         >
-                                        <option value=""></option>
-                                        <option value="Coupe">Coupe</option>
-                                        <option value="Double">Double</option>
-                                        <option value="Repik">Repik</option>
-                                        <option value="Caisse">Caisse</option>
-                                        <option value="Marca1">Marca1</option>
-                                        <option value="Marca2">Marca2</option>
-                                        <option value="Timbao">Timbao</option>
+                                        {
+                                          InstrumentsType.InstrumentsType.map((type, key)=>{
+                                                    return (
+                                                    <option key={key} value={type.value}>{type.label}</option>
+                                                    );
+                                              })
+                                        }
                                       </select>
                                 </div>
                               </div>

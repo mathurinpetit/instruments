@@ -20,6 +20,8 @@ import AdminInstrumentEdit from "./pages/AdminInstrumentEdit"
 import AdminSondages from "./pages/AdminSondages"
 import AdminSondagesEdit from "./pages/AdminSondagesEdit"
 
+import CarteGlobale from "./pages/CarteGlobale"
+
 import AdminUtilisateurListe from "./pages/AdminUtilisateurListe"
 import AdminUtilisateurCreate from "./pages/AdminUtilisateurCreate"
 import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
@@ -54,9 +56,11 @@ function Main() {
                 <Route path="/admin/sondages/afficher" component={AdminSondages} />
                 <Route path="/admin/sondages/edit" component={AdminSondagesEdit} />
 
-              <Route path="/admin/utilisateur/liste" component={AdminUtilisateurListe} />
-              <Route path="/admin/utilisateur/create"  component={AdminUtilisateurCreate} />
-              <Route path="/admin/utilisateur/edit/:id"  component={AdminUtilisateurEdit} />
+                <Route path="/carte/afficher" component={CarteGlobale} />
+
+                <Route path="/admin/utilisateur/liste" component={AdminUtilisateurListe} />
+                <Route path="/admin/utilisateur/create"  component={AdminUtilisateurCreate} />
+                <Route path="/admin/utilisateur/edit/:id"  component={AdminUtilisateurEdit} />
             </Switch>
           </Router>
        </header>

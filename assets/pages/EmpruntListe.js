@@ -9,7 +9,7 @@ import Menu from "./Menu"
 
 function EmpruntListe() {
     const cookies = new Cookies();
-    const [instrumentsList, setInstrumentList] = useState([])
+    const [instrumentsList, setInstrumentsList] = useState([])
     const [isSaving, setIsSaving] = useState(false)
     const [userCookie, setUserCookie] = useState(cookies.get('utilisateur'))
     const [utilisateurName, setUtilisateurName] = useState('')
@@ -28,7 +28,7 @@ function EmpruntListe() {
     const fetchInstrumentList = () => {
         axios.get('/emprunt/instrument')
         .then(function (response) {
-          setInstrumentList(response.data);
+          setInstrumentsList(response.data);
         })
         .catch(function (error) {
           console.log(error);
