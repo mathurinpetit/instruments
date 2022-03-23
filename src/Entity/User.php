@@ -44,6 +44,10 @@ class User
      */
     private $lon;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $admin;
 
     /**
     * @ORM\OneToMany(targetEntity="Instrument", mappedBy="emprunteur")
@@ -106,6 +110,18 @@ class User
     public function setLon(?float $lon): self
     {
         $this->lon = $lon;
+
+        return $this;
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
 
         return $this;
     }

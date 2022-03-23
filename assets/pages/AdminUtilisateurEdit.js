@@ -3,6 +3,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import Menu from "./Menu"
 
 function AdminUtilisateurEdit() {
 
@@ -61,6 +62,7 @@ function AdminUtilisateurEdit() {
 
     return (
         <Layout>
+            <Menu active="admin" />
                 <h2 className="text-center mt-5 mb-3">Édition d'un utilisateur</h2>
                 <div className="card">
                     <div className="card-header">

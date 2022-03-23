@@ -4,6 +4,7 @@ import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import Linkify from 'react-linkify';
+import Menu from "./Menu"
 
 function Sondages() {
 
@@ -26,34 +27,7 @@ function Sondages() {
 
     return (
         <Layout>
-          <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-              <img className="bi me-2" width="200" height="60" src="../logo.png" />
-              <span className="fs-4">Application</span>
-            </Link>
-
-            <ul className="nav nav-pills">
-              <li className="nav-item">
-                <Link aria-current="page"
-                    className="nav-link"
-                    to="/">Instruments
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link aria-current="page"
-                    className="nav-link active"
-                    to="/sondages/afficher">Sondages
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link aria-current="page"
-                    className="nav-link"
-                  to="/admin/espace">
-                  <ion-icon name="lock-closed"></ion-icon>
-                </Link>
-              </li>
-            </ul>
-          </header>
+          <Menu active="sondages" />
           <h2 className="text-center mt-5 mb-3">Sondages</h2>
             <div className="card">
               <div className="card-body">

@@ -126,6 +126,7 @@ class IdentificationController extends AbstractController
           'address' => $utilisateur->getAddress(),
           'lat' => $utilisateur->getLat(),
           'lon' => $utilisateur->getLon(),
+          'isAdmin' => $utilisateur->getAdmin()
       ];
 
       $response->setContent(json_encode($data));

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import UtilisateurModal from "./UtilisateurModal"
+import Menu from "./Menu"
 
 function EmpruntListe() {
     const cookies = new Cookies();
@@ -101,33 +102,7 @@ function EmpruntListe() {
 
     return (
         <Layout>
-          <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-              <img className="bi me-2" width="200" height="60" src="../logo.png" />
-              <span className="fs-4">Application</span>
-            </Link>
-            <ul className="nav nav-pills">
-              <li className="nav-item">
-                <Link aria-current="page"
-                    className="nav-link active"
-                    to="/">Instruments
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link aria-current="page"
-                    className="nav-link"
-                    to="/sondages/afficher">Sondages
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link aria-current="page"
-                    className="nav-link"
-                  to="/admin/espace">
-                  <ion-icon name="lock-closed"></ion-icon>
-                </Link>
-              </li>
-            </ul>
-          </header>
+          <Menu active="instrus" />
           <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
           { utilisateurAdresse &&
             <h4 className="text-center mt-5 mb-3"><small>{utilisateurAdresse}&nbsp;
