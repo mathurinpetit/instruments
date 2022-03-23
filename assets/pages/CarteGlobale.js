@@ -31,7 +31,7 @@ function CarteGlobale() {
           <h2 className="text-center mt-5 mb-3">Carte</h2>
           <div className="card">
             <div className="card-body">
-            <MapContainer center={centerMap} zoom={12} style={{ height: "70vh" }}>
+            <MapContainer center={centerMap} zoom={12} style={{ height: "60vh" }}>
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
