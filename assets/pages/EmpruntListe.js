@@ -128,20 +128,22 @@ function EmpruntListe() {
               </li>
             </ul>
           </header>
-          {userCookie
-                      ? <UtilisateurModal user={userCookie} userName={utilisateurName} userAddress={utilisateurAdresse}
-                                          linkText="Changer d'utilisateur ou d'adresse"
-                                          title="Changer d'utilisateur ou d'adresse" />
-                                        : <UtilisateurModal user="" userName="" userAddress=""
-                                          linkText="Qui suis-je ?"
-                                          title="Bonjour, qui êtes-vous ?" />
-          }
           <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
-          <h4 className="text-center mt-5 mb-3">{utilisateurAdresse}&nbsp;{utilisateurLat}x{utilisateurLon}
-            <a className="btn btn-sm btn-primary" target="_blank" href={"https://maps.google.com/?q="+utilisateurLat+","+utilisateurLon} >
-              <ion-icon name="map-outline"></ion-icon>
-            </a>
-          </h4>
+          { utilisateurAdresse &&
+            <h4 className="text-center mt-5 mb-3"><small>{utilisateurAdresse}&nbsp;
+              <a className="btn btn-sm btn-primary" target="_blank" href={"https://maps.google.com/?q="+utilisateurLat+","+utilisateurLon} >
+                <ion-icon name="map-outline"></ion-icon>
+              </a></small>
+            </h4>
+          }
+            {userCookie
+              ? <UtilisateurModal user={userCookie} userName={utilisateurName} userAddress={utilisateurAdresse}
+              linkText="Changer d'utilisateur ou d'adresse"
+              title="Changer d'utilisateur ou d'adresse" />
+            : <UtilisateurModal user="" userName="" userAddress=""
+            linkText="Qui suis-je ?"
+            title="Bonjour, qui êtes-vous ?" />
+        }
           <h2 className="text-center mt-5 mb-3">Instruments</h2>
             <div className="card">
               <div className="card-body">
@@ -158,8 +160,13 @@ function EmpruntListe() {
                           <p className="mb-0 opacity-75">{instrument.description}</p>
                         </div>
                         <small className="opacity-50 text-nowrap">
-                          <span className="mb-0">{instrument.emprunte ? 'Actuellement emprunté par : ' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                          <span className={(instrument.emprunte ? 'emprunte dot' : 'libre dot')}></span>
+                          <span className="mb-0">{instrument.emprunte ? 'Emprunté par : ' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            { instrument.emprunteurAdresse &&
+                              <a className="btn btn-sm btn-primary" target="_blank" href={"https://maps.google.com/?q="+instrument.emprunteurLat+","+instrument.emprunteurLon} >
+                                <ion-icon name="map-outline"></ion-icon>
+                              </a>
+                            }
+                          &nbsp;&nbsp;&nbsp;<span className={(instrument.emprunte ? ' btn emprunte dot' : 'btn libre dot')}></span>
                         </small>
                       </div>
                     </div>

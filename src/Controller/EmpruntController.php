@@ -35,7 +35,10 @@ class EmpruntController extends AbstractController
             'type' => $instrument->getType(),
             'emprunte' => $instrument->getEmprunte(),
             'emprunteurNom' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getNom() : '',
-            'emprunteurId' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getId() : ''
+            'emprunteurId' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getId() : '',
+            'emprunteurAdresse' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getAddress() : null,
+            'emprunteurLat' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getLat() : '',
+            'emprunteurLon' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getLon() : ''
         ];
      }
      $response->setContent(json_encode($data));

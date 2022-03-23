@@ -103,7 +103,7 @@ class User
         return $this->lon;
     }
 
-    public function setLon(float $lon): self
+    public function setLon(?float $lon): self
     {
         $this->lon = $lon;
 

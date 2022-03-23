@@ -32,7 +32,7 @@ class IdentificationController extends AbstractController
           $data[] = [
               'value' => $utilisateur->getId(),
               'label' => $utilisateur->getNom(),
-              'adresse' => $utilisateur->getAddress()
+              'adresse' => ($utilisateur->getAddress()? $utilisateur->getAddress() : "")
           ];
        }
        $response->setContent(json_encode($data));
@@ -55,9 +55,11 @@ class IdentificationController extends AbstractController
 
        $utilisateur = new User();
        $utilisateur->setNom($request->request->get('name'));
-       $utilisateur->setAddress($request->request->get('address'));
-       $utilisateur->setLon($request->request->get('lon'));
-       $utilisateur->setLat($request->request->get('lat'));
+       if($request->request->get('address')){
+         $utilisateur->setAddress($request->request->get('address'));
+         $utilisateur->setLon($request->request->get('lon'));
+         $utilisateur->setLat($request->request->get('lat'));
+       }
 
        $entityManager->persist($utilisateur);
        $entityManager->flush();
@@ -83,6 +85,7 @@ class IdentificationController extends AbstractController
        }
 
        $content = json_decode($request->getContent());
+
        $utilisateur->setAddress($content->address);
        $utilisateur->setLon($content->lon);
        $utilisateur->setLat($content->lat);

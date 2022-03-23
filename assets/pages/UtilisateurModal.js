@@ -34,7 +34,7 @@ function UtilisateurModal(props) {
   const [lon, setLon] = useState(null);
   const [lat, setLat] = useState(null);
 
-  const typeahead = useRef(null);
+  const ref = React.createRef();
 
   const handleChangeCheckbox = () => {
     setChecked(!checked);
@@ -46,9 +46,9 @@ function UtilisateurModal(props) {
   }
   const handleShow = () => {
     setShow(true);
+    setName(props.user)
     if(props.userAddress){
       setChecked(false);
-      setName(props.user)
       moveSelectionOfAdresse(props.userAddress)
     }else{
       setChecked(true);
@@ -98,6 +98,13 @@ const moveSelectionOfAdresse = (adresseStr) => {
       })
   }
 
+  const purgeAdresseTypeHead = () => {
+    setChecked(true);
+    setAddress('');
+    setOptionsAdresse([]);
+    setSelectedAdresse([]);
+  }
+
   const handleNomChange = (
       newValue,
       actionMeta
@@ -109,27 +116,23 @@ const moveSelectionOfAdresse = (adresseStr) => {
 
       if(`${actionMeta.action}` == "create-option"){
         setName(newValue.value);
-        setAddress('');
-        typeahead.current?.clear();
+        purgeAdresseTypeHead();
         setIsNew(true);
       }
       if(`${actionMeta.action}` == "select-option"){
         setName(newValue.value);
         setChecked(false);
-        moveSelectionOfAdresse(newValue.adresse);
-        setAddress(newValue.adresse);
+        if(newValue.adresse){
+           moveSelectionOfAdresse(newValue.adresse);
+           setAddress(newValue.adresse);
+         }else{
+          purgeAdresseTypeHead();
+        }
         setIsNew(false);
       }
-      if(`${actionMeta.action}` == "clear"){
-        setName('');
-        setAddress('');
-        typeahead.current?.clear();
-        setIsNew(false);
-      }
+
     };
 
-  const handleInputNomChange = (inputValue, actionMeta) => {
-  };
 
   const handleSearchAdresse = (query) => {
   setIsAdresseLoading(true);
@@ -161,10 +164,15 @@ const moveSelectionOfAdresse = (adresseStr) => {
       setIsSaving(true);
       if(isNew){
         let formData = new FormData()
-        formData.append("address",address.selected[0].adresse)
-        formData.append("name", name)
-        formData.append("lon", lon)
-        formData.append("lat", lat)
+        formData.append("name", name);
+        if(address.selected !== undefined){
+          formData.append("address",address.selected[0].adresse)
+          formData.append("lon", lon)
+          formData.append("lat", lat)
+        }else{
+          formData.append("lon", null)
+          formData.append("lat", null)
+        }
         axios.post('/identification/utilisateur', formData)
             .then(function (response) {
               let utilisateur = response.data
@@ -191,8 +199,13 @@ const moveSelectionOfAdresse = (adresseStr) => {
               setIsSaving(false);
         });
       }else{
-        const adresseTmp = (address.selected === undefined)? address : address.selected[0].adresse;
-        axios.patch(`/identification/utilisateur/${name}`, { address: adresseTmp , lon : lon, lat: lat})
+        let params = { address: null , lon : null, lat: null};
+        if(address.selected !== undefined && address.selected[0] !== undefined){
+          params = { address: address.selected[0].adresse , lon : lon, lat: lat}
+        }else if (typeof address === 'string') {
+          params = { address: address , lon : lon, lat: lat}
+        }
+        axios.patch(`/identification/utilisateur/${name}`, params)
           .then(function (response) {
             cookies.set('utilisateur', name, { path: '/' });
             setIsSaving(false);
@@ -215,10 +228,11 @@ const moveSelectionOfAdresse = (adresseStr) => {
 
   return (
     <div>
-      <Button className="utilisateur-popup" onClick={handleShow}>
-        {props.linkText}
-      </Button>
-
+      <div className="text-center mt-5 mb-3">
+        <button className="utilisateur-popup btn btn-link " onClick={handleShow}>
+          {props.linkText}
+        </button>
+      </div>
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
@@ -229,9 +243,7 @@ const moveSelectionOfAdresse = (adresseStr) => {
                     <div className="col-sm">
                       <div className="form-group">
                               <CreatableSelect
-                                isClearable
                                 onChange={handleNomChange}
-                                onInputChange={handleInputNomChange}
                                 options={utilisateursOptions}
                                 id="name"
                                 name="name"
@@ -277,7 +289,7 @@ const moveSelectionOfAdresse = (adresseStr) => {
                   <div className="row">
                     <div className="col-sm">
                       <div className="form-group">
-                      <AsyncTypeahead ref={typeahead}
+                      <AsyncTypeahead ref={ref}
                         id="adresse"
                         name="adresse"
                         onChange={(s)=>{setAddress({ selected: s})}}
