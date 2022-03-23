@@ -12,6 +12,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import AdminInstrumentCreate from "./AdminInstrumentCreate"
 import AdminInstrumentEdit from "./AdminInstrumentEdit"
+import Menu from "./Menu"
 
 function AdminInstrumentListe() {
   const  [instrumentsList, setInstrumentList] = useState([])
