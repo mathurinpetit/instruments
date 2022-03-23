@@ -29,6 +29,8 @@
         "file-loader": "^6.2.0",
         "react-bootstrap": "^2.2.1",
         "react-bootstrap-typeahead": "^6.0.0-alpha.9",
+        "leaflet": "^1.7.1",
+        "react-leaflet": "^3.2.5",
         "react-linkify": "^1.0.0-alpha",
         "react-router-dom": "^5.2.0",
         "react-select": "^5.2.2",
