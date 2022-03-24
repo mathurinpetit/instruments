@@ -48,7 +48,7 @@ function AdminUtilisateurCreate() {
                 <div className="card">
                     <div className="card-header">
                         <Link
-                            className="btn btn-outline-info float-right"
+                            className="btn btn-primary float-right"
                             to="/admin/utilisateur/liste">Retour à la liste
                         </Link>
                     </div>
@@ -84,7 +84,7 @@ function AdminUtilisateurCreate() {
                                 disabled={isSaving}
                                 onClick={handleSave}
                                 type="button"
-                                className="btn btn-outline-primary mt-3">
+                                className="btn btn-primary mt-3">
                                 Enregistrer
                             </button>
                         </form>

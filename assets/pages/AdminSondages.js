@@ -63,7 +63,7 @@ function AdminSondages() {
                                           </td>
                                           <td>
                                               <Link
-                                                  className="btn btn-outline-success mx-1"
+                                                  className="btn btn-success mx-1"
                                                   to={`/admin/sondages/edit`}>
                                                   Modifier
                                               </Link>

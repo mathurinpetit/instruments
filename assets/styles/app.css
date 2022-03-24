@@ -1,6 +1,11 @@
-body {
+body, .card-body, .table {
     background-color: black;
     color: white;
+}
+
+.card-header {
+  background-color: rgba(50, 50, 50);
+  border-bottom: 1px solid rgba(200,200,200);
 }
 
 h1,
@@ -20,6 +25,10 @@ h2,
   -moz-transition: all 0.2s;
   transition: all 0.2s;
   max-height: 100px;
+}
+
+.utilisateur-popup-link{
+  margin-top: 0 !important;
 }
 
 #mainNav .active{

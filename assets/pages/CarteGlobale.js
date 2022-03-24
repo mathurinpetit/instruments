@@ -54,10 +54,11 @@ const changeType = (newType) => {
   return (
         <Layout>
           <Menu active="carte" />
-            <div className="row">
-              <div className="col-sm">
-                <div className="form-group">
-                    <label htmlFor="type">Type</label>
+          <div className="row">
+                <div className="col text-right">
+                    <label htmlFor="type">Filtrer par instruments : </label>
+                </div>
+                <div className="col">
                       <select
                         onChange={(event)=>{changeType(event.target.value)}}
                         className="form-control"
@@ -72,9 +73,8 @@ const changeType = (newType) => {
                         }
                       </select>
                 </div>
-              </div>
             </div>
-            <br/>
+          <br/>
 
           <div className="card">
             <div className="card-body">

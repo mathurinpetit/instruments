@@ -30,8 +30,8 @@ function Sondages() {
           <Menu active="sondages" />
           <h2 className="text-center mt-5 mb-3">Sondages</h2>
             <div className="card">
-              <div className="card-body">
                 <div className="list-group">
+                  <div className="sondages card-body">
                       <div className="d-flex gap-2 w-100 justify-content-between">
                         <div>
                           <h6 className="mb-0"></h6>

@@ -227,7 +227,7 @@ const moveSelectionOfAdresse = (adresseStr) => {
 
   return (
     <div>
-      <div className="text-center mt-5 mb-3">
+      <div className="utilisateur-popup-link text-center mt-5 mb-3">
         <button className="utilisateur-popup btn btn-link " onClick={handleShow}>
           {props.linkText}
         </button>

@@ -33,13 +33,13 @@ function AdminInstrumentListe() {
 
   const handleDelete = (id) => {
       Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          title: 'Êtes vous sûrs?',
+          text: "Après cette opération, il ne sera pas possible de revenir en arrière!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
+          cancelButtonText: "Annuler",
+          confirmButtonText: 'Oui, je supprime!'
         }).then((result) => {
           if (result.isConfirmed) {
               axios.delete(`/admin/instrument/${id}`)
@@ -71,7 +71,7 @@ function AdminInstrumentListe() {
               <div className="card">
                   <div className="card-header">
                       <Link
-                          className="btn btn-outline-primary"
+                          className="btn btn-primary"
                           to="/admin/instrument/create">Ajouter un instrument
                       </Link>
                   </div>
@@ -95,13 +95,13 @@ function AdminInstrumentListe() {
                                           <td>{instrument.description}</td>
                                           <td>
                                               <Link
-                                                  className="btn btn-outline-success mx-1"
+                                                  className="btn btn-success mx-1"
                                                   to={`/admin/instrument/edit/${instrument.id}`}>
                                                   Modifier
                                               </Link>
                                               <button
                                                   onClick={()=>handleDelete(instrument.id)}
-                                                  className="btn btn-outline-danger mx-1">
+                                                  className="btn btn-danger mx-1">
                                                   Supprimer
                                               </button>
                                           </td>

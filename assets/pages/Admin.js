@@ -15,36 +15,46 @@ function Admin() {
     return (
         <Layout>
             <Menu active="admin" />
-                <h2 className="text-center mt-5 mb-3">Gestion instruments</h2>
-                <div className="card">
-                    <div className="card-body">
-                      ICI LA LISTE DES INSTRU
-                      <br/>
-                      <Link
-                        className="btn btn-outline-primary"
-                        to="/admin/instrument/liste">Gestion instruments</Link>
-                    </div>
+
+            <br/>
+            <div className="row">
+              <div className="col-sm text-center">
+                <Link
+                  className="btn btn-lg btn-light"
+                  to="/admin/listestudio">Instruments au studio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <ion-icon name="arrow-forward-outline"></ion-icon></Link>
+
                 </div>
-                <h2 className="text-center mt-5 mb-3">Gestion Sondages</h2>
-                <div className="card">
-                    <div className="card-body">
-                      ICI LES SONDAGES DISPOS
+              </div>
                       <br/>
+                        <div className="row">
+                          <div className="col-sm text-center">
                       <Link
-                        className="btn btn-outline-primary"
-                        to="/admin/sondages/afficher">Gestion Sondages</Link>
+                        className="btn btn-lg btn-light"
+                        to="/admin/instrument/liste">Gestion instruments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <ion-icon name="arrow-forward-outline"></ion-icon></Link>
+
                     </div>
-                </div>
-                <h2 className="text-center mt-5 mb-3">Gestion Utilisateurs</h2>
-                <div className="card">
-                    <div className="card-body">
-                      ICI LES UTILISATEURS
+                    </div>
+                    <br/>
+                      <div className="row">
+                        <div className="col-sm text-center">
+                      <Link
+                        className="btn btn-lg btn-light"
+                        to="/admin/sondages/afficher">Gestion Sondages&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <ion-icon name="arrow-forward-outline"></ion-icon></Link>
+
+                      </div>
+                      </div>
                       <br/>
+                        <div className="row">
+                          <div className="col-sm text-center">
                       <Link
-                        className="btn btn-outline-primary"
-                        to="/admin/utilisateur/liste">Gestion Utilisateurs</Link>
-                    </div>
-                </div>
+                        className="btn btn-lg btn-light"
+                        to="/admin/utilisateur/liste">Gestion Utilisateurs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <ion-icon name="arrow-forward-outline"></ion-icon></Link>
+                        </div>
+                      </div>
         </Layout>
     );
 }

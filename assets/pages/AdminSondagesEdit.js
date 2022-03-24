@@ -73,7 +73,7 @@ function AdminSondagesEdit() {
                                 disabled={isSaving}
                                 onClick={handleSave}
                                 type="button"
-                                className="btn btn-outline-success mt-3">
+                                className="btn btn-success mt-3">
                                 Mettre à jour
                             </button>
                         </form>
