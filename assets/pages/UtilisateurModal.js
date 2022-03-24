@@ -51,7 +51,7 @@ function UtilisateurModal(props) {
       setChecked(false);
       moveSelectionOfAdresse(props.userAddress)
     }else{
-      setChecked(true);
+      setChecked(false);
     }
 
   }
@@ -99,7 +99,6 @@ const moveSelectionOfAdresse = (adresseStr) => {
   }
 
   const purgeAdresseTypeHead = () => {
-    setChecked(true);
     setAddress('');
     setOptionsAdresse([]);
     setSelectedAdresse([]);
@@ -261,7 +260,7 @@ const moveSelectionOfAdresse = (adresseStr) => {
                       <br/>
                       <div className="form-group">
                       <label>
-                        Mettre à jour l'adresse ? {"  "}
+                        {props.userAddress? "Mettre à jour votre adresse ? " : "Indiquez votre adresse ? (facultatif) " }
                         <input
                           type="checkbox"
                           checked={checked}

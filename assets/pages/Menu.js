@@ -25,11 +25,11 @@ function Menu(props) {
   }
 
   return (
-    <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <header id="mainNav" className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <img className="bi me-2" width="200" height="60" src="../logo.png" />
       </Link>
-      <ul className="nav nav-pills">
+      <ul className="nav">
         <li className="nav-item">
           <Link aria-current="page"
               className={(props.active == "instrus")? "nav-link  active" : "nav-link" }

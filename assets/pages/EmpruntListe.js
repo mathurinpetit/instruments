@@ -62,7 +62,7 @@ function EmpruntListe() {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonText: "Annuler",
             confirmButtonText: emprunte ? "Oui je rend l'instrument !" : "Oui j'emprunte cet instrument !",
           }).then((result) => {
               if (result.isConfirmed) {
@@ -106,7 +106,7 @@ function EmpruntListe() {
           <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
           { utilisateurAdresse &&
             <h4 className="text-center mt-5 mb-3"><small>{utilisateurAdresse}&nbsp;
-              <a className="btn btn-sm btn-primary" target="_blank" href={"https://maps.google.com/?q="+utilisateurLat+","+utilisateurLon} >
+              <a className="btn btn-sm btn-light" target="_blank" href={"https://maps.google.com/?q="+utilisateurLat+","+utilisateurLon} >
                 <ion-icon name="map-outline"></ion-icon>
               </a></small>
             </h4>
@@ -116,8 +116,8 @@ function EmpruntListe() {
               linkText="Changer d'utilisateur ou d'adresse"
               title="Changer d'utilisateur ou d'adresse" />
             : <UtilisateurModal user="" userName="" userAddress=""
-            linkText="Qui suis-je ?"
-            title="Bonjour, qui êtes-vous ?" />
+              linkText="Qui suis-je ?"
+              title="Bonjour, qui êtes-vous ?" />
         }
           <h2 className="text-center mt-5 mb-3">Instruments</h2>
             <div className="card">
@@ -127,8 +127,9 @@ function EmpruntListe() {
                  const emprunteurIsNotMe = (instrument.emprunte && (instrument.emprunteurId != cookies.get('utilisateur')));
                  return (
                     <div key={key} onClick={()=>handleAction(instrument.id,instrument.emprunte)}
-                            className={ emprunteurIsNotMe ? "disabled list-group-item list-group-item-action d-flex gap-3 py-3 " : "list-group-item list-group-item-action d-flex gap-3 py-3 " }
-                            aria-current="true">
+                            className={ emprunteurIsNotMe ? "disabled list-group-item list-group-item-action d-flex gap-3 py-3 " : "list-group-item list-group-item-action d-flex gap-3 py-3" }
+                            aria-current="true"
+                            role="button" >
                       <div className="d-flex gap-2 w-100 justify-content-between">
                         <div>
                           <h6 className="mb-0">{instrument.name}</h6>
@@ -137,7 +138,7 @@ function EmpruntListe() {
                         <small className="opacity-50 text-nowrap">
                           <span className="mb-0">{instrument.emprunte ? 'Emprunté par : ' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
                             { instrument.emprunteurAdresse &&
-                              <a className="btn btn-sm btn-primary" target="_blank" href={"https://maps.google.com/?q="+instrument.emprunteurLat+","+instrument.emprunteurLon} >
+                              <a className="btn btn-sm btn-light" target="_blank" href={"https://maps.google.com/?q="+instrument.emprunteurLat+","+instrument.emprunteurLon} >
                                 <ion-icon name="map-outline"></ion-icon>
                               </a>
                             }

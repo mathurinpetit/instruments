@@ -1,5 +1,63 @@
 body {
-    background-color: white;
+    background-color: black;
+    color: white;
+}
+
+h1,
+h2,
+.modal-title
+{
+    font-family: "Cracked", Regular;
+    font-size: 1.3rem;
+    font-weight: 200;
+}
+
+#mainNav {
+  border-bottom: 1px solid rgba(33, 37, 41, 0.1);
+  background-color: #000;
+  font-family: "Cracked", Regular;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+  max-height: 100px;
+}
+
+#mainNav .active{
+  color: #e90004 !important;
+}
+
+#mainNav .nav-link, .nav-link{
+color: rgba(255, 255, 255, 0.7);
+}
+
+#mainNav .nav-link:focus, .nav-link:hover{
+  color: #fff !important;
+}
+
+.swal2-cancel{
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.btn-light{
+  border: solid 0.5px!important;
+  border-color: #565e64 !important;
+}
+
+
+.btn {
+    border: none;
+        border-top-color: currentcolor;
+        border-right-color: currentcolor;
+        border-bottom-color: currentcolor;
+        border-left-color: currentcolor;
+    font-family: "Cracked", Regular;
+}
+
+.btn-link
+{
+    color: #e90004 !important;
 }
 
 .dot {
@@ -17,4 +75,20 @@ body {
 
 .emprunte {
   background-color: red;
+}
+
+.modal-content{
+  color: black;
+}
+
+@font-face {
+font-family: 'Cracked';
+src: local('Cracked'), url('../fonts/Middcracked.woff') format('woff');
+/*
+src: local('Cracked'), url('./fonts/Middcracked.ttf') format('truetype'),
+     local('Cracked'), url('./fonts/Middcracked.woff') format('woff'),
+     local('Cracked'), url('./fonts/Middcracked.eot?#iefix') format('embedded-opentype'), */
+
+font-weight: normal;
+font-style: normal;
 }

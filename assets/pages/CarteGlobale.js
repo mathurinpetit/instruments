@@ -1,53 +1,106 @@
-import React,{ useState, useEffect}  from 'react';
+import React,{ useState, useEffect, useRef }  from 'react';
 import Layout from "../components/Layout";
 import Menu from "./Menu";
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, FeatureGroup } from 'react-leaflet';
 import axios from 'axios';
+import InstrumentsType from "./InstrumentsType";
+
 
 const centerMap = [48.902170, 2.400660] //Oscillo studio
 
 function CarteGlobale() {
 
-
+  const [map, setMap] = useState(null);
+  const [instrumentsReady,setInstrumentsReady] = useState(null);
   const [instrumentsMarkerList, setInstrumentsMarkerList] = useState([])
+  const [filteredInstrumentsList,setFilteredInstrumentsList] = useState([])
+  const featureGroupRef = useRef();
+
+
+const changeType = (newType) => {
+  if(!newType){
+    setFilteredInstrumentsList(instrumentsMarkerList);
+  }else{
+    const newFiltered = [];
+    instrumentsMarkerList.forEach(instru => {
+        if(instru.type === newType){
+          newFiltered.push(instru);
+        }
+      }
+    );
+    setFilteredInstrumentsList(newFiltered);
+  }
+}
 
   useEffect(() => {
-      fetchInstrumentMarkerList();
-  }, [])
+    fetchInstrumentMarkerList();
+    if (!map) return;
+    if (!instrumentsReady) return;
+      map.fitBounds(featureGroupRef.current.getBounds());
+  }, [map,instrumentsReady]);
 
   const fetchInstrumentMarkerList = () => {
-      axios.get('/emprunt/instrument')
-      .then(function (response) {
-        setInstrumentsMarkerList(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+    axios.get('/emprunt/instrument')
+    .then(function (response) {
+      setInstrumentsMarkerList(response.data);
+      setFilteredInstrumentsList(response.data);
+      setInstrumentsReady(true);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
   }
 
   return (
         <Layout>
           <Menu active="carte" />
-          <h2 className="text-center mt-5 mb-3">Carte</h2>
+            <div className="row">
+              <div className="col-sm">
+                <div className="form-group">
+                    <label htmlFor="type">Type</label>
+                      <select
+                        onChange={(event)=>{changeType(event.target.value)}}
+                        className="form-control"
+                        id="type"
+                        >
+                        {
+                          InstrumentsType.InstrumentsType.map((type, key)=>{
+                                    return (
+                                    <option key={key} value={type.value}>{type.label}</option>
+                                    );
+                              })
+                        }
+                      </select>
+                </div>
+              </div>
+            </div>
+            <br/>
+
           <div className="card">
             <div className="card-body">
-            <MapContainer center={centerMap} zoom={12} style={{ height: "60vh" }}>
+            <MapContainer
+              center={centerMap}
+              zoom={12}
+              style={{ height: "60vh" }}
+              whenCreated={setMap}
+              >
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {instrumentsMarkerList.map((instrument, key)=>{
-              const localPosition = (instrument.emprunte && instrument.emprunteurAdresse)? [instrument.emprunteurLat,instrument.emprunteurLon] : centerMap;
-              console.log(localPosition);
-               return (
-                   <Marker key={key} position={localPosition}>
-                     <Popup>
-                       {instrument.type} <br /> {instrument.name}
-                     </Popup>
-                   </Marker>
-                );
-              })
-              }
+              <FeatureGroup ref={featureGroupRef}>
+                {filteredInstrumentsList.map((instrument, key)=>{
+                const localPosition = (instrument.emprunte && instrument.emprunteurAdresse)? [instrument.emprunteurLat,instrument.emprunteurLon] : centerMap;
+                 return (
+                     <Marker key={key} position={localPosition} className={"markerInstru "+instrument.type} >
+                       <Popup>
+                         {instrument.type} <br /> {instrument.name}
+                       </Popup>
+                     </Marker>
+                  );
+                })
+                }
+              </FeatureGroup>
             </MapContainer>
             </div>
           </div>
