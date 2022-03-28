@@ -120,7 +120,8 @@ class Instrument
         $emprunte = $this->getEmprunte();
 
         if($emprunte && ($user->getId()!=$this->getEmprunteur()->getId())){
-          return null;
+          $this->setEmprunteur($user);
+          return $user;
         }
 
         if($emprunte && $user->getId()==$this->getEmprunteur()->getId()){

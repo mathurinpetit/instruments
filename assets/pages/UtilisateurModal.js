@@ -313,16 +313,16 @@ const moveSelectionOfAdresse = (adresseStr) => {
                 }
 
         </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Fermer
-            </Button>
-            <Button disabled={isSaving}
-                    onClick={handleSave}
-                    className="btn btn-primary">
-              Enregistrer
-            </Button>
-          </Modal.Footer>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Fermer
+          </Button>
+          <Button disabled={isSaving}
+                  onClick={handleSave}
+                  className="btn btn-primary">
+            Enregistrer
+          </Button>
+        </Modal.Footer>
         </form>
       </Modal>
     </div>

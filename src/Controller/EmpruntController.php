@@ -74,13 +74,16 @@ class EmpruntController extends AbstractController
          'name' => $instrument->getName(),
          'type' => $instrument->getType(),
          'description' => $instrument->getDescription(),
+         'echange' => false,
          'success' => true
        ];
-     }else{
-       $data =  [
-         'success' => false,
-         'text' => "Cet instrument n'a pas été réservé par vous !"
-       ];
+       if($rendu instanceof User){
+         $data =  [
+           'success' => true,
+           'echange' => true,
+           'text' => "Vous avez bien récupéré cet instrument !"
+         ];
+       }
      }
 
      $response->setContent(json_encode($data));

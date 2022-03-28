@@ -4,12 +4,15 @@ import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import UtilisateurModal from "./UtilisateurModal"
+import UtilisateurModal from "./UtilisateurModal";
+import UtilisateurLocalMapModal from "./UtilisateurLocalMapModal";
 import Menu from "./Menu"
 
 function EmpruntListe() {
     const cookies = new Cookies();
     const [instrumentsList, setInstrumentsList] = useState([])
+    const [instrumentsEmprunteList, setInstrumentsEmprunteList] = useState([])
+
     const [isSaving, setIsSaving] = useState(false)
     const [userCookie, setUserCookie] = useState(cookies.get('utilisateur'))
     const [utilisateurName, setUtilisateurName] = useState('')
@@ -28,7 +31,18 @@ function EmpruntListe() {
     const fetchInstrumentList = () => {
         axios.get('/emprunt/instrument')
         .then(function (response) {
-          setInstrumentsList(response.data);
+          const myInstruments = [];
+          const otherInstruments = [];
+
+          response.data.forEach((item, i) => {
+            if(item.emprunteurId === userCookie){
+              myInstruments.push(item);
+            }else{
+              otherInstruments.push(item);
+            }
+          });
+          setInstrumentsEmprunteList(myInstruments);
+          setInstrumentsList(otherInstruments);
         })
         .catch(function (error) {
           console.log(error);
@@ -54,28 +68,64 @@ function EmpruntListe() {
       })
     }
 
-    const handleAction = (id,emprunte) => {
+    const openPopupLocalMap = (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+    }
+
+    const handleAction = (instrument) => {
         const idUser = cookies.get('utilisateur');
+
+        const id = instrument.id;
+        const emprunte = instrument.emprunte;
+        const emprunteParMoi = (instrument.emprunteurId === idUser  );
+
+        let sawlTitle = "J'emprunte ?";
+        let sawlText = "Voulez-vous emprunter l'instrument ?";
+        let swalConfirmText = "Oui j'emprunte cet instrument !";
+
+        if(emprunte && emprunteParMoi){
+          sawlTitle = "Je rend ?";
+          sawlText = "Voulez-vous rendre l'instrument ?";
+          swalConfirmText = "Oui je rend l'instrument !";
+        }
+
+        if(emprunte && !emprunteParMoi){
+          sawlTitle = instrument.emprunteurNom+" me passe l'instrument "+instrument.name;
+          sawlText = "J'ai vu avec "+instrument.emprunteurNom;
+          swalConfirmText = "Oui je prend cet instrument !";
+        }
+
         Swal.fire({
-            title: emprunte ? "Je rend ?" : "J'emprunte ?",
-            text: emprunte ? "Voulez-vous rendre l'instrument ?" : "Voulez-vous emprunter l'instrument ?",
+            title: sawlTitle,
+            text: sawlText,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonText: "Annuler",
-            confirmButtonText: emprunte ? "Oui je rend l'instrument !" : "Oui j'emprunte cet instrument !",
+            confirmButtonText: swalConfirmText,
           }).then((result) => {
               if (result.isConfirmed) {
                 setIsSaving(true);
                 axios.patch(`/emprunt/instrument/${id}`,{ idUser : cookies.get('utilisateur') })
                 .then(function (response) {
                     if(response.data.success){
-                      Swal.fire({
-                          icon: 'success',
-                          title: emprunte ? ""+response.data.type+" "+response.data.name+" rendu !" : ""+response.data.type+" "+response.data.name+" emprunté !",
-                          showConfirmButton: false,
-                          timer: 1500
-                      });
+                      if(!response.data.echange){
+                        Swal.fire({
+                            icon: 'success',
+                            title: emprunte ? ""+response.data.type+" "+response.data.name+" rendu !" : ""+response.data.type+" "+response.data.name+" emprunté !",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                      }else{
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.data.text,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                      }
                     }else{
                       Swal.fire({
                           icon: 'error',
@@ -118,16 +168,50 @@ function EmpruntListe() {
             : <UtilisateurModal user="" userName="" userAddress=""
               linkText="Qui suis-je ?"
               title="Bonjour, qui êtes-vous ?" />
+            }
+
+        {instrumentsEmprunteList.length > 0 &&
+        <h2 className="text-center mt-5 mb-3">Mes emprunts</h2>
         }
-          <h2 className="text-center mt-5 mb-3">Instruments</h2>
+        {instrumentsEmprunteList.length > 0 &&
+          <div className="card">
+            <div className="card-body">
+              <div className="list-group">
+              {instrumentsEmprunteList.map((instrument, key)=>{
+               return (
+                  <div key={key} onClick={()=>handleAction(instrument)}
+                          className="list-group-item list-group-item-action d-flex gap-3 py-3"
+                          aria-current="true"
+                          role="button" >
+                    <div className="d-flex gap-2 w-100 justify-content-between">
+                      <div>
+                        <h6 className="mb-0">{instrument.name}</h6>
+                        <p className="mb-0 opacity-75">{instrument.description}</p>
+                      </div>
+                      <small className="opacity-50 d-flex">
+                        <span className="mb-0">Emprunté par moi</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                          { instrument.emprunteurAdresse &&
+                            <UtilisateurLocalMapModal instrument={instrument} />
+                          }
+                        &nbsp;&nbsp;&nbsp;<span className=' btn emprunte dot'></span>
+                      </small>
+                    </div>
+                  </div>
+                )
+                })}
+                </div>
+              </div>
+            </div>
+          }
+
+          <h2 className="text-center mt-5 mb-3">{(instrumentsEmprunteList.length > 0)? "Autres instruments" : "Instruments" }</h2>
             <div className="card">
               <div className="card-body">
                 <div className="list-group">
                 {instrumentsList.map((instrument, key)=>{
-                 const emprunteurIsNotMe = (instrument.emprunte && (instrument.emprunteurId != cookies.get('utilisateur')));
                  return (
-                    <div key={key} onClick={()=>handleAction(instrument.id,instrument.emprunte)}
-                            className={ emprunteurIsNotMe ? "disabled list-group-item list-group-item-action d-flex gap-3 py-3 " : "list-group-item list-group-item-action d-flex gap-3 py-3" }
+                    <div key={key} onClick={()=>handleAction(instrument)}
+                            className="list-group-item list-group-item-action d-flex gap-3 py-3"
                             aria-current="true"
                             role="button" >
                       <div className="d-flex gap-2 w-100 justify-content-between">
@@ -135,12 +219,10 @@ function EmpruntListe() {
                           <h6 className="mb-0">{instrument.name}</h6>
                           <p className="mb-0 opacity-75">{instrument.description}</p>
                         </div>
-                        <small className="opacity-50 text-nowrap">
-                          <span className="mb-0">{instrument.emprunte ? 'Emprunté par : ' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <small className="opacity-50 d-flex">
+                          <span className="mb-0">{instrument.emprunte ? '' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
                             { instrument.emprunteurAdresse &&
-                              <a className="btn btn-sm btn-light" target="_blank" href={"https://maps.google.com/?q="+instrument.emprunteurLat+","+instrument.emprunteurLon} >
-                                <ion-icon name="map-outline"></ion-icon>
-                              </a>
+                              <UtilisateurLocalMapModal instrument={instrument} />
                             }
                           &nbsp;&nbsp;&nbsp;<span className={(instrument.emprunte ? ' btn emprunte dot' : 'btn libre dot')}></span>
                         </small>
