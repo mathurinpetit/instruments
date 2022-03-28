@@ -4,6 +4,9 @@ import Menu from "./Menu";
 import { MapContainer, Marker, Popup, TileLayer, FeatureGroup } from 'react-leaflet';
 import axios from 'axios';
 import InstrumentsType from "./InstrumentsType";
+import MarkerClusterGroup from 'react-leaflet-markercluster';
+import Double from "../images/icons/Double.png";
+import Coupe from "../images/icons/Coupe.png";
 
 
 const centerMap = [48.902170, 2.400660] //Oscillo studio
@@ -16,6 +19,31 @@ function CarteGlobale() {
   const [filteredInstrumentsList,setFilteredInstrumentsList] = useState([])
   const featureGroupRef = useRef();
 
+
+  let iconsArray = {
+    "DoubleIcon": L.icon({
+      iconUrl: Double,
+      iconRetinaUrl: Double,
+      iconAnchor: [35, 30],
+      popupAnchor: [10, -44],
+      iconSize: [60, 60],
+    }),
+    "CoupeIcon": L.icon({
+      iconUrl: Coupe,
+      iconRetinaUrl: Coupe,
+      iconAnchor: [35, 30],
+      popupAnchor: [10, -44],
+      iconSize: [60, 60],
+    })
+  }
+
+  const createClusterCustomIcon = function (cluster) {
+    return L.divIcon({
+      html: `<span>${cluster.getChildCount()}</span>`,
+      className: 'marker-cluster-custom',
+      iconSize: L.point(40, 40, true),
+    });
+  };
 
 const changeType = (newType) => {
   if(!newType){
@@ -89,17 +117,38 @@ const changeType = (newType) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <FeatureGroup ref={featureGroupRef}>
-                {filteredInstrumentsList.map((instrument, key)=>{
-                const localPosition = (instrument.emprunte && instrument.emprunteurAdresse)? [instrument.emprunteurLat,instrument.emprunteurLon] : centerMap;
-                 return (
-                     <Marker key={key} position={localPosition} className={"markerInstru "+instrument.type} >
-                       <Popup>
-                         {instrument.type} <br /> {instrument.name}
+                <MarkerClusterGroup
+                  showCoverageOnHover={false}
+                  spiderfyDistanceMultiplier={2}
+                  iconCreateFunction={createClusterCustomIcon}
+                  >
+                {filteredInstrumentsList.filter((instrument) => {
+                    if (instrument.emprunte && (!instrument.emprunteurAdresse || !instrument.emprunteurLat || !instrument.emprunteurLon)) {
+                      return false;
+                    }
+                    return true;
+                  }).map((instrument, key)=>{
+                  const localPosition = (instrument.emprunte && instrument.emprunteurAdresse)? [instrument.emprunteurLat,instrument.emprunteurLon] : centerMap;
+                  const adresse = (!instrument.emprunte || !instrument.emprunteurAdresse)? 'Au Studio' : instrument.emprunteurAdresse;
+                  const nom = (!instrument.emprunte || !instrument.emprunteurNom)? '' : instrument.emprunteurNom;
+
+                  const instruIcon = instrument.type+"Icon";
+                  return (
+                     <Marker key={key} position={localPosition} className={"markerInstru "+instrument.type}
+                       icon={ iconsArray[instrument.type+"Icon"] } >
+                       <Popup className="mapMiniPopup" maxWidth="500" >
+                         <h3>{instrument.name} - {instrument.type}</h3>
+                         <small>{instrument.description}</small><br />
+                         <h4><strong>Chez {nom}</strong></h4>
+                         <h4><strong>{adresse}</strong></h4>
                        </Popup>
                      </Marker>
                   );
-                })
+
+                  })
+
                 }
+                </MarkerClusterGroup>;
               </FeatureGroup>
             </MapContainer>
             </div>

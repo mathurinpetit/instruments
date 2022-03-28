@@ -39,7 +39,11 @@ function UtilisateurLocalMapModal(props) {
         </button>
         <Modal show={show} onHide={handleClose} size="lg" >
           <Modal.Header closeButton>
-            <Modal.Title>{props.instrument.emprunteurAdresse}</Modal.Title>
+            <Modal.Title>
+              <h5>
+                {props.instrument.emprunteurAdresse}
+              </h5>
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <MapContainer
