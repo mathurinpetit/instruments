@@ -73,6 +73,8 @@ function Sondages() {
                           </div>
                         </div>
                       </div>
+                      <br/>
+                      <br/>
         </Layout>
     );
 }

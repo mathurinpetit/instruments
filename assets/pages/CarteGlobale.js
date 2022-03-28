@@ -137,7 +137,7 @@ const changeType = (newType) => {
                   return (
                      <Marker key={key} position={localPosition} className={"markerInstru "+instrument.type}
                        icon={ iconsArray[instrument.type+"Icon"] } >
-                       <Popup className="mapMiniPopup" maxWidth="500" >
+                       <Popup className="mapMiniPopup" maxWidth="400" >
                          <h3>{instrument.name} - {instrument.type}</h3>
                          <small>{instrument.description}</small><br />
                          <h4><strong>Chez {nom}</strong></h4>
