@@ -153,9 +153,9 @@ function EmpruntListe() {
     return (
         <Layout>
           <Menu active="instrus" />
-          <h2 className="text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
+          <h2 className="adresseName text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
           { utilisateurAdresse &&
-            <h4 className="text-center mt-5 mb-3"><small>{utilisateurAdresse}&nbsp;
+            <h4 className="adresseLigne text-center mt-5 mb-3"><small>{utilisateurAdresse}&nbsp;
               <a className="btn btn-sm btn-light" target="_blank" href={"https://maps.google.com/?q="+utilisateurLat+","+utilisateurLon} >
                 <ion-icon name="map-outline"></ion-icon>
               </a></small>
