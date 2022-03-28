@@ -46,10 +46,24 @@ h2,
 
 #mainNav .nav-link, .nav-link{
 color: rgba(255, 255, 255, 0.7);
+padding: .5rem .5rem;
 }
 
 #mainNav .nav-link:focus, .nav-link:hover{
   color: #fff !important;
+}
+
+/* Customize the Clustered Markers */
+.marker-cluster-custom {
+  background: #e90004;
+  border: 3px solid #000;
+  border-radius: 50%;
+  color: #333;
+  height: 40px;
+  line-height: 37px;
+  text-align: center;
+  width: 40px;
+  font-family: "Cracked", Regular;
 }
 
 .swal2-cancel{
