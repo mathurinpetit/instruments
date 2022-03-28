@@ -183,20 +183,29 @@ function EmpruntListe() {
                           className="list-group-item list-group-item-action d-flex gap-3 py-3"
                           aria-current="true"
                           role="button" >
-                    <div className="d-flex gap-2 w-100 justify-content-between">
-                      <div>
-                        <h6 className="mb-0">{instrument.name}</h6>
-                        <p className="mb-0 opacity-75">{instrument.description}</p>
-                      </div>
-                      <small className="opacity-50 d-flex">
-                        <span className="mb-0">Emprunté par moi</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                          { instrument.emprunteurAdresse &&
-                            <UtilisateurLocalMapModal instrument={instrument} />
-                          }
-                        &nbsp;&nbsp;&nbsp;<span className=' btn emprunte dot'></span>
+                          <div className="d-flex gap-2 w-100">
+                            <div className="col">
+                              <h6>{instrument.name}&nbsp;</h6>
+                            </div>
+                            <div className="col">
+                              <h6>{instrument.type}&nbsp;</h6>
+                            </div>
+                            <div className="col">
+                              <h6>{instrument.description}&nbsp;</h6>
+                            </div>
+                            <div className="col">
+                              <small className="d-flex">
+                                <span className="col">Emprunté par moi</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                { (instrument.emprunteurAdresse)?
+                                  <UtilisateurLocalMapModal instrument={instrument} />
+                                  :
+                                  <div className="col"></div>
+                                }
+                        &nbsp;&nbsp;&nbsp;<div className="p-2"><span className='btn emprunte dot'></span></div>
                       </small>
                     </div>
                   </div>
+                </div>
                 )
                 })}
                 </div>
@@ -214,18 +223,29 @@ function EmpruntListe() {
                             className="list-group-item list-group-item-action d-flex gap-3 py-3"
                             aria-current="true"
                             role="button" >
-                      <div className="d-flex gap-2 w-100 justify-content-between">
-                        <div>
-                          <h6 className="mb-0">{instrument.name}</h6>
-                          <p className="mb-0 opacity-75">{instrument.description}</p>
+                      <div className="d-flex gap-2 w-100">
+                        <div className="col">
+                          <h6>{instrument.name}&nbsp;</h6>
                         </div>
-                        <small className="opacity-50 d-flex">
-                          <span className="mb-0">{instrument.emprunte ? '' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                            { instrument.emprunteurAdresse &&
-                              <UtilisateurLocalMapModal instrument={instrument} />
-                            }
-                          &nbsp;&nbsp;&nbsp;<span className={(instrument.emprunte ? ' btn emprunte dot' : 'btn libre dot')}></span>
-                        </small>
+                        <div className="col">
+                          <h6>{instrument.type}&nbsp;</h6>
+                        </div>
+                        <div className="col">
+                          <h6>{instrument.description}&nbsp;</h6>
+                        </div>
+                        <div className="col">
+                          <small className="d-flex">
+                            <span className="col">{instrument.emprunte ? '' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                              { (instrument.emprunteurAdresse)?
+                                <UtilisateurLocalMapModal instrument={instrument} />
+                                :
+                                <div className="col"></div>
+                              }
+                            &nbsp;&nbsp;&nbsp;<div className="p-2">
+                              <span className={(instrument.emprunte ? ' btn emprunte dot' : 'btn libre dot')}></span>
+                              </div>
+                          </small>
+                        </div>
                       </div>
                     </div>
                   )
