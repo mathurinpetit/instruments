@@ -39,7 +39,7 @@ function Menu(props) {
         <li className="nav-item">
           <Link aria-current="page"
               className={(props.active == "sondages")? "nav-link  active" : "nav-link" }
-              to="/sondages/afficher">Sondages
+              to="/sondages/afficher">Communication
           </Link>
         </li>
         <li className="nav-item">

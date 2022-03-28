@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Instrument;
-use App\Entity\Sondages;
+use App\Entity\Communication;
 use App\Entity\User;
 
 /**
@@ -303,23 +303,25 @@ public function utilisateurDelete(string $id): Response
 
 
  /**
-  * @Route("/sondages/edition", name="sondage_edit", methods={"PUT", "PATCH"})
+  * @Route("/communication/edition", name="communication_edit", methods={"PUT", "PATCH"})
   */
- public function sondageEdit(Request $request): Response
+ public function communicationEdit(Request $request): Response
  {
      $response = new Response();
      $response->headers->set('Content-Type', 'application/json');
 
      $entityManager = $this->getDoctrine()->getManager();
      $content = json_decode($request->getContent());
-     $sondages = new Sondages();
-     $sondages->setText($content->sondage);
-     $entityManager->persist($sondages);
+     $communication = new Communication();
+     $communication->setSondage($content->sondages);
+     $communication->setInformations($content->informations);
+     $entityManager->persist($communication);
 
      $entityManager->flush();
      $data =  [
-         'id' => $sondages->getId(),
-         'text' => $sondages->getText()
+         'id' => $communication->getId(),
+         'sondages' => $communication->getSondage(),
+         'informations' => $communication->getInformations()
      ];
 
      $response->setContent(json_encode($data));

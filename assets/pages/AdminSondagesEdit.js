@@ -3,20 +3,23 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import { DefaultEditor } from 'react-simple-wysiwyg';
 import Menu from "./Menu"
 
 function AdminSondagesEdit() {
 
     const history = useHistory();
 
-    const [sondage, setSondage] = useState('');
+    const [sondages, setSondages] = useState('');
+    const [informations, setInformations] = useState('');
     const [isSaving, setIsSaving] = useState(false)
 
 
     useEffect(() => {
-        axios.get(`/sondages/visualisation`)
+        axios.get(`/communication/visualisation`)
         .then(function (response) {
-          setSondage(response.data);
+          setSondages(response.data.sondages);
+          setInformations(response.data.informations);
         })
         .catch(function (error) {
           console.log(error);
@@ -24,16 +27,21 @@ function AdminSondagesEdit() {
 
     }, [])
 
+    function onChangeInformations(e) {
+        setInformations(e.target.value);
+    }
+
 
     const handleSave = () => {
         setIsSaving(true);
-        axios.patch(`/admin/sondages/edition`, {
-            sondage: sondage
+        axios.patch(`/admin/communication/edition`, {
+            sondages: sondages,
+            informations: informations
         })
         .then(function (response) {
             Swal.fire({
                 icon: 'success',
-                title: 'Les sondages ont étés mis à jour!',
+                title: 'La partie communication a été mise à jour!',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -43,7 +51,7 @@ function AdminSondagesEdit() {
         .catch(function (error) {
             Swal.fire({
                 icon: 'error',
-                title: 'An Error Occured!',
+                title: 'Une erreur est survenue!',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -60,14 +68,18 @@ function AdminSondagesEdit() {
                     <div className="card-body">
                         <form>
                             <div className="form-group">
-                                <label htmlFor="description">Sondage</label>
+                                <label htmlFor="description">Sondages</label>
                                 <textarea
-                                    value={sondage}
-                                    onChange={(event)=>{setSondage(event.target.value)}}
+                                    value={sondages}
+                                    onChange={(event)=>{setSondages(event.target.value)}}
                                     className="form-control"
                                     id="description"
                                     rows="4"
                                     name="description"></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="description">Informations</label>
+                                <DefaultEditor value={informations} onChange={onChangeInformations} />
                             </div>
                             <button
                                 disabled={isSaving}

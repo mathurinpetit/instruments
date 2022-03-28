@@ -4,20 +4,29 @@ import Layout from "../components/Layout"
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import Linkify from 'react-linkify';
+import DOMPurify from 'dompurify';
 import Menu from "./Menu"
 
 function Sondages() {
 
-    const  [sondages, setSondages] = useState([])
+    const  [sondages, setSondages] = useState([]);
+    const  [informations, setInformations] = useState('');
 
     useEffect(() => {
-        fetchSondages()
+        fetchCommunication();
     }, [])
 
-    const fetchSondages = () => {
-        axios.get('/sondages/visualisation')
+    const createMarkup = (html) => {
+     return  {
+      __html: DOMPurify.sanitize(html)
+     }
+    }
+
+    const fetchCommunication = () => {
+        axios.get('/communication/visualisation')
         .then(function (response) {
-          setSondages(response.data);
+          setSondages(response.data.sondages);
+          setInformations(response.data.informations);
         })
         .catch(function (error) {
           console.log(error);
@@ -53,6 +62,17 @@ function Sondages() {
                     </div>
                   </div>
                 </div>
+                <h2 className="text-center mt-5 mb-3">Infos</h2>
+                  <div className="card">
+                      <div className="list-group">
+                        <div className="sondages card-body">
+                            <div className="d-flex gap-2 w-100 justify-content-between">
+                              <div className="informations" dangerouslySetInnerHTML={createMarkup(informations)}>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
         </Layout>
     );
 }

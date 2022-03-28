@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Sondages;
+use App\Entity\Communication;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Sondages|null find($id, $lockMode = null, $lockVersion = null)
- * @method Sondages|null findOneBy(array $criteria, array $orderBy = null)
- * @method Sondages[]    findAll()
- * @method Sondages[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Communication|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Communication|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Communication[]    findAll()
+ * @method Communication[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SondagesRepository extends ServiceEntityRepository
+class CommunicationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Sondages::class);
+        parent::__construct($registry, Communication::class);
     }
 
     // /**
-    //  * @return Sondages[] Returns an array of Sondages objects
+    //  * @return Communication[] Returns an array of Communication objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class SondagesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Sondages
+    public function findOneBySomeField($value): ?Communication
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

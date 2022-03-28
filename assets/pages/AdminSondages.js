@@ -12,20 +12,31 @@ import {
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import Menu from "./Menu"
+import DOMPurify from 'dompurify';
 import AdminInstrumentEdit from "./AdminInstrumentEdit"
 
 
 function AdminSondages() {
   const  [sondages, setSondages] = useState([])
+  const  [informations, setInformations] = useState([])
 
   useEffect(() => {
-      fetchSondages()
+      fetchCommunication()
   }, [])
 
-  const fetchSondages = () => {
-      axios.get('/sondages/visualisation')
+
+
+  const createMarkup = (html) => {
+   return  {
+    __html: DOMPurify.sanitize(html)
+   }
+  }
+
+  const fetchCommunication = () => {
+      axios.get('/communication/visualisation')
       .then(function (response) {
-        setSondages(response.data);
+        setSondages(response.data.sondages);
+        setInformations(response.data.informations);
       })
       .catch(function (error) {
         console.log(error);
@@ -36,14 +47,14 @@ function AdminSondages() {
   return (
       <Layout>
         <Menu active="admin" />
-          <h2 className="text-center mt-5 mb-3">Gestion sondages</h2>
+          <h2 className="text-center mt-5 mb-3">Gestion communication</h2>
               <div className="card">
                   <div className="card-body">
 
                       <table className="table table-bordered">
                           <thead>
                               <tr>
-                                  <th>Sondages</th>
+                                  <th>Communication</th>
                                   <th></th>
                               </tr>
                           </thead>
@@ -61,12 +72,19 @@ function AdminSondages() {
                                             })}
                                             </Linkify>
                                           </td>
-                                          <td>
+
+                                          <td rowSpan={2}>
                                               <Link
                                                   className="btn btn-success mx-1"
                                                   to={`/admin/sondages/edit`}>
                                                   Modifier
                                               </Link>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <div className="informations" dangerouslySetInnerHTML={createMarkup(informations)}>
+                                              </div>
                                           </td>
                                       </tr>
                           </tbody>

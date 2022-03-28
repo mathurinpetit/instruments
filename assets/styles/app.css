@@ -95,6 +95,11 @@ color: rgba(255, 255, 255, 0.7);
   background-color: red;
 }
 
+.rsw-editor {
+  background-color: white;
+  color: black;
+}
+
 .modal-content{
   color: black;
 }
