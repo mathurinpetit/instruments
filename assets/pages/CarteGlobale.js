@@ -1,6 +1,7 @@
 import React,{ useState, useEffect, useRef }  from 'react';
 import Layout from "../components/Layout";
 import Menu from "./Menu";
+import L from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer, FeatureGroup } from 'react-leaflet';
 import axios from 'axios';
 import InstrumentsType from "./InstrumentsType";
