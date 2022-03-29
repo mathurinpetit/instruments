@@ -14,8 +14,8 @@ function EmpruntInstrumentItem(props) {
   <div className="col">
     { props.instrument.description &&
       <div>
-        <a data-tip data-for={'tooltip_'+props.instrument.name} ><ion-icon name="warning-outline"></ion-icon></a>
-        <ReactTooltip id={'tooltip_'+props.instrument.name} type='error'>
+        <a data-event={"click"} data-tip='tooltip' data-for={'tooltip_'+props.instrument.name} ><ion-icon name="warning-outline"></ion-icon></a>
+        <ReactTooltip id={'tooltip_'+props.instrument.name} type='error' globalEventOff={"click"} >
           <span>{props.instrument.description}</span>
         </ReactTooltip>
       </div>
