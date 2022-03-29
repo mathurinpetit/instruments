@@ -109,11 +109,13 @@ function AdminUtilisateurListe() {
                                           </td>
                                           <td>
                                               <Link
+                                                  style={{margin: '10px'}}
                                                   className="btn btn-success mx-1"
                                                   to={`/admin/utilisateur/edit/${utilisateur.id}`}>
                                                   <ion-icon name="create-outline"></ion-icon>
                                               </Link>
                                               <button
+                                                  style={{margin: '10px'}}
                                                   onClick={()=>handleDelete(utilisateur.id)}
                                                   className="btn btn-danger mx-1">
                                                   <ion-icon name="trash-outline"></ion-icon>

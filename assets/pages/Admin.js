@@ -41,7 +41,7 @@ function Admin() {
                         <div className="col-sm text-center">
                       <Link
                         className="btn btn-lg btn-light"
-                        to="/admin/sondages/afficher">Gestion Sondages&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        to="/admin/sondages/afficher">Communication&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <ion-icon name="arrow-forward-outline"></ion-icon></Link>
 
                       </div>

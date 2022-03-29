@@ -64,13 +64,19 @@ function AdminSondages() {
           </div>
           <br/>
               <div className="card">
+                <div className="card-header">
+                <Link
+                    className="btn btn-success mx-1"
+                    to={`/admin/sondages/edit`}>
+                    Modifier
+                </Link>
+              </div>
                   <div className="card-body">
 
                       <table className="table table-bordered">
                           <thead>
                               <tr>
-                                  <th>Communication</th>
-                                  <th></th>
+                                  <th>Sondages</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -87,21 +93,23 @@ function AdminSondages() {
                                             })}
                                             </Linkify>
                                           </td>
-
-                                          <td rowSpan={2}>
-                                              <Link
-                                                  className="btn btn-success mx-1"
-                                                  to={`/admin/sondages/edit`}>
-                                                  Modifier
-                                              </Link>
-                                          </td>
                                       </tr>
-                                      <tr>
-                                          <td>
-                                              <div className="informations" dangerouslySetInnerHTML={createMarkup(informations)}>
-                                              </div>
-                                          </td>
-                                      </tr>
+                          </tbody>
+                        </table>
+                        <br/>
+                        <table className="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Informations</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                     <td>
+                                        <div className="informations" dangerouslySetInnerHTML={createMarkup(informations)}>
+                                        </div>
+                                      </td>
+                                  </tr>
                           </tbody>
                       </table>
                   </div>

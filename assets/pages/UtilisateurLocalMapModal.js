@@ -85,7 +85,7 @@ function UtilisateurLocalMapModal(props) {
                      <small>{props.instrument.description}</small><br />
                      <h4><strong>{props.instrument.emprunteurNom}</strong></h4>
                      <h6><strong>{props.instrument.emprunteurAdresse}</strong></h6>
-                     <button className="btn btn-sm btn-light" onClick={ (e) => { window.location.href="geo:"+props.instrument.emprunteurLat+","+props.instrument.emprunteurLon } }  >
+                     <button className="btn btn-sm btn-light" onClick={ (e) => { window.location.href="geo:"+props.instrument.emprunteurLat+","+props.instrument.emprunteurLon+"?q="+props.instrument.emprunteurLat+","+props.instrument.emprunteurLon } }  >
                          J'y vais&nbsp;&nbsp;&nbsp;&nbsp;<ion-icon name="navigate-outline"></ion-icon>
                      </button>
                  </Popup>

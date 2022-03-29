@@ -142,7 +142,7 @@ const changeType = (newType) => {
                          <small>{instrument.description}</small><br />
                          <h4><strong>{nom}</strong></h4>
                          <h6><strong>{adresse}</strong></h6>
-                         <a className="btn btn-sm btn-light" target="_blank" href={"geo:"+localPosition[0]+","+localPosition[1]} >
+                         <a className="btn btn-sm btn-light" target="_blank" href={"geo:"+localPosition[0]+","+localPosition[1]+"?q="+localPosition[0]+","+localPosition[1]} >
                              J'y vais&nbsp;&nbsp;&nbsp;&nbsp;<ion-icon name="navigate-outline"></ion-icon>
                          </a>
                        </Popup>
