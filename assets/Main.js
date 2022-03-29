@@ -25,6 +25,8 @@ import CarteGlobale from "./pages/CarteGlobale"
 import AdminUtilisateurListe from "./pages/AdminUtilisateurListe"
 import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
 
+import AdminListeStudio from "./pages/AdminListeStudio"
+
 function Main() {
 
   let axiosDefaults = require('axios/lib/defaults');
@@ -54,6 +56,8 @@ function Main() {
 
                 <Route path="/admin/sondages/afficher" component={AdminSondages} />
                 <Route path="/admin/sondages/edit" component={AdminSondagesEdit} />
+
+                <Route path="/admin/listestudio" component={AdminListeStudio} />
 
                 <Route path="/carte/afficher" component={CarteGlobale} />
 

@@ -90,7 +90,6 @@ function AdminUtilisateurListe() {
                           <thead>
                               <tr>
                                   <th>Nom</th>
-                                  <th>Adresse</th>
                                   <th>Instruments</th>
                                   <th width="240px">Action</th>
                               </tr>
@@ -99,8 +98,8 @@ function AdminUtilisateurListe() {
                               {utilisateursList.map((utilisateur, key)=>{
                                   return (
                                       <tr key={key}>
-                                          <td>{utilisateur.name}</td>
-                                          <td>{utilisateur.address}</td>
+                                          <td>{utilisateur.name}<br/>
+                                              {utilisateur.address}</td>
                                           <td>
                                             {utilisateur.instruments.map((instrument, k)=>{
                                                 return (
