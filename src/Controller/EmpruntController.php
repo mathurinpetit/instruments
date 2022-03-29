@@ -32,6 +32,7 @@ class EmpruntController extends AbstractController
         $data[] = [
             'id' => $instrument->getId(),
             'name' => $instrument->getName(),
+            'description' => $instrument->getDescription(),
             'type' => $instrument->getType(),
             'emprunte' => $instrument->getEmprunte(),
             'emprunteurNom' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getNom() : '',
