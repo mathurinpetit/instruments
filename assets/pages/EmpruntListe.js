@@ -5,8 +5,8 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import UtilisateurModal from "./UtilisateurModal";
-import UtilisateurLocalMapModal from "./UtilisateurLocalMapModal";
-import Menu from "./Menu"
+import Menu from "./Menu";
+import EmpruntInstrumentItem from "./EmpruntInstrumentItem";
 
 function EmpruntListe() {
     const cookies = new Cookies();
@@ -177,32 +177,11 @@ function EmpruntListe() {
               {instrumentsEmprunteList.map((instrument, key)=>{
                return (
                   <div key={key} onClick={()=>handleAction(instrument)}
-                          className="list-group-item list-group-item-action d-flex gap-3 py-3"
+                          className="list-group-item list-group-item-action d-flex"
                           aria-current="true"
                           role="button" >
-                          <div className="d-flex gap-2 w-100">
-                            <div className="col">
-                              <h6>{instrument.name}&nbsp;</h6>
-                            </div>
-                            <div className="col">
-                              <h6>{instrument.type}&nbsp;</h6>
-                            </div>
-                            <div className="col">
-                              <h6>{instrument.description}&nbsp;</h6>
-                            </div>
-                            <div className="col">
-                              <small className="d-flex">
-                                <span className="col">Emprunté par moi</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                { (instrument.emprunteurAdresse)?
-                                  <UtilisateurLocalMapModal instrument={instrument} />
-                                  :
-                                  <div className="col"></div>
-                                }
-                        &nbsp;&nbsp;&nbsp;<div className="p-2"><span className='btn emprunte dot'></span></div>
-                      </small>
-                    </div>
+                      <EmpruntInstrumentItem instrument={instrument} emprunteParMoi={true} />
                   </div>
-                </div>
                 )
                 })}
                 </div>
@@ -217,33 +196,10 @@ function EmpruntListe() {
                 {instrumentsList.map((instrument, key)=>{
                  return (
                     <div key={key} onClick={()=>handleAction(instrument)}
-                            className="list-group-item list-group-item-action d-flex gap-3 py-3"
+                            className="list-group-item list-group-item-action d-flex"
                             aria-current="true"
                             role="button" >
-                      <div className="d-flex gap-2 w-100">
-                        <div className="col">
-                          <h6>{instrument.name}&nbsp;</h6>
-                        </div>
-                        <div className="col">
-                          <h6>{instrument.type}&nbsp;</h6>
-                        </div>
-                        <div className="col">
-                          <h6>{instrument.description}&nbsp;</h6>
-                        </div>
-                        <div className="col">
-                          <small className="d-flex">
-                            <span className="col">{instrument.emprunte ? '' : 'Disponible'}{ instrument.emprunteurNom }</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                              { (instrument.emprunteurAdresse)?
-                                <UtilisateurLocalMapModal instrument={instrument} />
-                                :
-                                <div className="col"></div>
-                              }
-                            &nbsp;&nbsp;&nbsp;<div className="p-2">
-                              <span className={(instrument.emprunte ? ' btn emprunte dot' : 'btn libre dot')}></span>
-                              </div>
-                          </small>
-                        </div>
-                      </div>
+                            <EmpruntInstrumentItem instrument={instrument} emprunteParMoi={false} />
                     </div>
                   )
                   })}

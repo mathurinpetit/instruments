@@ -53,8 +53,8 @@ function UtilisateurLocalMapModal(props) {
   }, [map]);
 
   return (
-      <div className="p-2" onClick={ (e) => { e.stopPropagation(); e.preventDefault(); }}>
-        <button className="btn btn-sm btn-light" onClick={ (e) => { handleShow(e) }} >
+      <div className="col" onClick={ (e) => { e.stopPropagation(); e.preventDefault(); }}>
+        <button className="btn btn-xs btn-light float-end" onClick={ (e) => { handleShow(e) }} >
           <ion-icon name="map-outline"></ion-icon>
         </button>
         <Modal show={show} onHide={handleClose} size="lg" >
