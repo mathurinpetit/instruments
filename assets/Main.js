@@ -23,7 +23,6 @@ import AdminSondagesEdit from "./pages/AdminSondagesEdit"
 import CarteGlobale from "./pages/CarteGlobale"
 
 import AdminUtilisateurListe from "./pages/AdminUtilisateurListe"
-import AdminUtilisateurCreate from "./pages/AdminUtilisateurCreate"
 import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
 
 function Main() {
@@ -59,7 +58,6 @@ function Main() {
                 <Route path="/carte/afficher" component={CarteGlobale} />
 
                 <Route path="/admin/utilisateur/liste" component={AdminUtilisateurListe} />
-                <Route path="/admin/utilisateur/create"  component={AdminUtilisateurCreate} />
                 <Route path="/admin/utilisateur/edit/:id"  component={AdminUtilisateurEdit} />
             </Switch>
           </Router>

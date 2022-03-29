@@ -47,7 +47,22 @@ function AdminSondages() {
   return (
       <Layout>
         <Menu active="admin" />
-          <h2 className="text-center mt-5 mb-3">Gestion communication</h2>
+          <div className="d-flex">
+            <div className="col">
+              <Link
+                className="btn btn-sm btn-light"
+                to="/admin/espace">
+                <ion-icon name="arrow-back-outline"></ion-icon>&nbsp;&nbsp;
+                Retour
+              </Link>
+            </div>
+            <div className="col">
+              <h2 className="text-center">Gestion Communication</h2>
+            </div>
+            <div className="col">
+            </div>
+          </div>
+          <br/>
               <div className="card">
                   <div className="card-body">
 

@@ -11,7 +11,6 @@ import {
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Badge } from 'react-bootstrap';
-import AdminUtilisateurCreate from "./AdminUtilisateurCreate"
 import AdminUtilisateurEdit from "./AdminUtilisateurEdit"
 import Menu from "./Menu"
 
@@ -47,7 +46,7 @@ function AdminUtilisateurListe() {
               .then(function (response) {
                   Swal.fire({
                       icon: 'success',
-                      title: 'Utilisateur deleted successfully!',
+                      title: 'Utilisateur supprimé!',
                       showConfirmButton: false,
                       timer: 1500
                   })
@@ -56,7 +55,7 @@ function AdminUtilisateurListe() {
               .catch(function (error) {
                   Swal.fire({
                       icon: 'error',
-                      title: 'An Error Occured!',
+                      title: 'Une erreur est survenue!',
                       showConfirmButton: false,
                       timer: 1500
                   })
@@ -68,14 +67,23 @@ function AdminUtilisateurListe() {
   return (
       <Layout>
         <Menu active="admin" />
-          <h2 className="text-center mt-5 mb-3">Gestion Utilisateurs</h2>
+          <div className="d-flex">
+            <div className="col">
+              <Link
+                className="btn btn-sm btn-light"
+                to="/admin/espace">
+                <ion-icon name="arrow-back-outline"></ion-icon>&nbsp;&nbsp;
+                Retour
+              </Link>
+            </div>
+            <div className="col">
+              <h2 className="text-center">Gestion Utilisateurs</h2>
+            </div>
+            <div className="col">
+            </div>
+          </div>
+          <br/>
               <div className="card">
-                  <div className="card-header">
-                      <Link
-                          className="btn btn-primary"
-                          to="/admin/utilisateur/create">Ajouter un utilisateur
-                      </Link>
-                  </div>
                   <div className="card-body">
 
                       <table className="table table-bordered">
@@ -103,12 +111,12 @@ function AdminUtilisateurListe() {
                                               <Link
                                                   className="btn btn-success mx-1"
                                                   to={`/admin/utilisateur/edit/${utilisateur.id}`}>
-                                                  Modifier
+                                                  <ion-icon name="create-outline"></ion-icon>
                                               </Link>
                                               <button
                                                   onClick={()=>handleDelete(utilisateur.id)}
                                                   className="btn btn-danger mx-1">
-                                                  Supprimer
+                                                  <ion-icon name="trash-outline"></ion-icon>
                                               </button>
                                           </td>
                                       </tr>

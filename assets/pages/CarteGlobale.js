@@ -130,18 +130,21 @@ const changeType = (newType) => {
                     return true;
                   }).map((instrument, key)=>{
                   const localPosition = (instrument.emprunte && instrument.emprunteurAdresse)? [instrument.emprunteurLat,instrument.emprunteurLon] : centerMap;
-                  const adresse = (!instrument.emprunte || !instrument.emprunteurAdresse)? 'Au Studio' : instrument.emprunteurAdresse;
-                  const nom = (!instrument.emprunte || !instrument.emprunteurNom)? '' : instrument.emprunteurNom;
+                  const nom = (!instrument.emprunte || !instrument.emprunteurNom)? 'Au Studio' : 'Chez '+instrument.emprunteurNom;
+                  const adresse = (!instrument.emprunte || !instrument.emprunteurAdresse)? '' : instrument.emprunteurAdresse;
 
                   const instruIcon = instrument.type+"Icon";
                   return (
                      <Marker key={key} position={localPosition} className={"markerInstru "+instrument.type}
                        icon={ iconsArray[instrument.type+"Icon"] } >
-                       <Popup className="mapMiniPopup" maxWidth="400" >
+                       <Popup className="mapMiniPopup" maxWidth="350" >
                          <h3>{instrument.name} - {instrument.type}</h3>
                          <small>{instrument.description}</small><br />
-                         <h4><strong>Chez {nom}</strong></h4>
-                         <h4><strong>{adresse}</strong></h4>
+                         <h4><strong>{nom}</strong></h4>
+                         <h6><strong>{adresse}</strong></h6>
+                         <a className="btn btn-sm btn-light" target="_blank" href={"geo:"+localPosition[0]+","+localPosition[1]} >
+                             J'y vais&nbsp;&nbsp;&nbsp;&nbsp;<ion-icon name="navigate-outline"></ion-icon>
+                         </a>
                        </Popup>
                      </Marker>
                   );

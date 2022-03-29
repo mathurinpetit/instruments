@@ -46,7 +46,7 @@ function AdminInstrumentListe() {
               .then(function (response) {
                   Swal.fire({
                       icon: 'success',
-                      title: 'Instrument deleted successfully!',
+                      title: 'Instrument supprimé!',
                       showConfirmButton: false,
                       timer: 1500
                   })
@@ -55,7 +55,7 @@ function AdminInstrumentListe() {
               .catch(function (error) {
                   Swal.fire({
                       icon: 'error',
-                      title: 'An Error Occured!',
+                      title: 'Une erreur est survenue!',
                       showConfirmButton: false,
                       timer: 1500
                   })
@@ -67,7 +67,22 @@ function AdminInstrumentListe() {
   return (
       <Layout>
         <Menu active="admin" />
-          <h2 className="text-center mt-5 mb-3">Gestion instruments</h2>
+          <div className="d-flex">
+            <div className="col">
+              <Link
+                className="btn btn-sm btn-light"
+                to="/admin/espace">
+                <ion-icon name="arrow-back-outline"></ion-icon>&nbsp;&nbsp;
+                Retour
+              </Link>
+            </div>
+            <div className="col">
+              <h2 className="text-center">Gestion Instruments</h2>
+            </div>
+            <div className="col">
+            </div>
+          </div>
+          <br/>
               <div className="card">
                   <div className="card-header">
                       <Link
@@ -97,12 +112,12 @@ function AdminInstrumentListe() {
                                               <Link
                                                   className="btn btn-success mx-1"
                                                   to={`/admin/instrument/edit/${instrument.id}`}>
-                                                  Modifier
+                                                  <ion-icon name="create-outline"></ion-icon>
                                               </Link>
                                               <button
                                                   onClick={()=>handleDelete(instrument.id)}
                                                   className="btn btn-danger mx-1">
-                                                  Supprimer
+                                                  <ion-icon name="trash-outline"></ion-icon>
                                               </button>
                                           </td>
                                       </tr>
