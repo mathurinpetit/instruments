@@ -13,8 +13,8 @@ import InstrumentsType from "./InstrumentsType";
 import Coupe from "../images/icons/Coupe.png";
 import Repik from "../images/icons/Repik.png";
 import Caisse from "../images/icons/Caisse.png";
-import Marka1 from "../images/icons/Marka1.png";
-import Marka2 from "../images/icons/Marka2.png";
+import Marca1 from "../images/icons/Marca1.png";
+import Marca2 from "../images/icons/Marca2.png";
 import Timbao from "../images/icons/Timbao.png";
 
 
@@ -86,12 +86,11 @@ function AdminListeStudio() {
               </div>
                   <div className="card-body">
                   {instrumentsList.map((instrumentsByType, key)=>{
-                    console.log(instrumentsByType.instruments);
                          return (
                            <table className="table table-bordered" key={key}>
                                <thead>
                                    <tr>
-                                       <th>{instrumentsByType.type} <span class="badge rounded-pill bg-danger float-end">{instrumentsByType.instruments.length}</span></th>
+                                       <th>{instrumentsByType.type} <span className="badge rounded-pill bg-danger float-end">{instrumentsByType.instruments.length}</span></th>
                                    </tr>
                                </thead>
                                <tbody>

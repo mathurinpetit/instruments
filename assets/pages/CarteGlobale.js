@@ -10,8 +10,8 @@ import Double from "../images/icons/Double.png";
 import Coupe from "../images/icons/Coupe.png";
 import Repik from "../images/icons/Repik.png";
 import Caisse from "../images/icons/Caisse.png";
-import Marka1 from "../images/icons/Marka1.png";
-import Marka2 from "../images/icons/Marka2.png";
+import Marca1 from "../images/icons/Marca1.png";
+import Marca2 from "../images/icons/Marca2.png";
 import Timbao from "../images/icons/Timbao.png";
 
 
@@ -55,16 +55,16 @@ function CarteGlobale() {
       popupAnchor: [10, -44],
       iconSize: [60, 60],
     }),
-    "Marka1Icon": L.icon({
-      iconUrl: Marka1,
-      iconRetinaUrl: Marka1,
+    "Marca1Icon": L.icon({
+      iconUrl: Marca1,
+      iconRetinaUrl: Marca1,
       iconAnchor: [35, 30],
       popupAnchor: [10, -44],
       iconSize: [60, 60],
     }),
-    "Marka2Icon": L.icon({
-      iconUrl: Marka2,
-      iconRetinaUrl: Marka2,
+    "Marca2Icon": L.icon({
+      iconUrl: Marca2,
+      iconRetinaUrl: Marca2,
       iconAnchor: [35, 30],
       popupAnchor: [10, -44],
       iconSize: [60, 60],
