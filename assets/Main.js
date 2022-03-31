@@ -26,6 +26,7 @@ import AdminUtilisateurListe from "./pages/AdminUtilisateurListe"
 import AdminUtilisateurEdit from "./pages/AdminUtilisateurEdit"
 
 import AdminListeStudio from "./pages/AdminListeStudio"
+import AdminZComme from "./pages/AdminZComme" 
 
 function Main() {
 
@@ -58,6 +59,7 @@ function Main() {
                 <Route path="/admin/sondages/edit" component={AdminSondagesEdit} />
 
                 <Route path="/admin/listestudio" component={AdminListeStudio} />
+                <Route path="/admin/zcomme" component={AdminZComme} />
 
                 <Route path="/carte/afficher" component={CarteGlobale} />
 

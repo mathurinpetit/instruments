@@ -55,6 +55,16 @@ function Admin() {
                         <ion-icon name="arrow-forward-outline"></ion-icon></Link>
                         </div>
                       </div>
+
+                      <br/>
+                        <div className="row">
+                          <div className="col-sm text-center">
+                      <Link
+                        className="btn btn-lg btn-light"
+                        to="/admin/zcomme">Z comme . . .&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <ion-icon name="arrow-forward-outline"></ion-icon></Link>
+                        </div>
+                      </div>
         </Layout>
     );
 }
