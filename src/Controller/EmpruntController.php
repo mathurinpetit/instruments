@@ -26,10 +26,14 @@ class EmpruntController extends AbstractController
          ->getRepository(Instrument::class)
          ->findAll();
 
-     $data = [];
+     $instrumentsSorted = [];
 
      foreach ($instruments as $instrument) {
-        $data[] = [
+       if(!array_key_exists($instrument->getType(),$instrumentsSorted)){
+         $instrumentsSorted[$instrument->getType()] = array();
+       }
+
+        $instrumentsSorted[$instrument->getType()][$instrument->getName()] = [
             'id' => $instrument->getId(),
             'name' => $instrument->getName(),
             'description' => $instrument->getDescription(),
@@ -42,6 +46,22 @@ class EmpruntController extends AbstractController
             'emprunteurLon' => ($instrument->getEmprunte())? $instrument->getEmprunteur()->getLon() : ''
         ];
      }
+
+    $sortedTypes = ["Coupe","Double","Repik","Caisse","Marca1","Marca2","Timbao"];
+
+    $data = [];
+    foreach ($sortedTypes as $sortedType) {
+
+      if(array_key_exists($sortedType,$instrumentsSorted)){
+        $instrumentsType = $instrumentsSorted[$sortedType];
+        ksort($instrumentsType);
+        foreach ($instrumentsType as $instru) {
+          $data[] = $instru;
+        }
+      }
+
+    }
+
      $response->setContent(json_encode($data));
 
      return $response;
