@@ -77,7 +77,7 @@ function AdminInstrumentListe() {
               </Link>
             </div>
             <div className="col">
-              <h2 className="text-center">Gestion Instruments</h2>
+              <h2 className="text-center titre ">Gestion Instruments</h2>
             </div>
             <div className="col">
             </div>

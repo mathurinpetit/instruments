@@ -77,7 +77,7 @@ function AdminUtilisateurListe() {
               </Link>
             </div>
             <div className="col">
-              <h2 className="text-center">Gestion Utilisateurs</h2>
+              <h2 className="titre text-center">Gestion Utilisateurs</h2>
             </div>
             <div className="col">
             </div>

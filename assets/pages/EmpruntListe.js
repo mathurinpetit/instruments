@@ -81,20 +81,20 @@ function EmpruntListe() {
         const emprunte = instrument.emprunte;
         const emprunteParMoi = (instrument.emprunteurId === idUser  );
 
-        let sawlTitle = "J'emprunte ?";
-        let sawlText = "Voulez-vous emprunter l'instrument ?";
+        let sawlTitle = "Emprunter l'instrument "+instrument.name+" ?";
+        let sawlText = "Il est au studio !";
         let swalConfirmText = "Oui j'emprunte cet instrument !";
 
         if(emprunte && emprunteParMoi){
-          sawlTitle = "Je rend ?";
-          sawlText = "Voulez-vous rendre l'instrument ?";
-          swalConfirmText = "Oui je rend l'instrument !";
+          sawlTitle = "Je rends ?";
+          sawlText = "Déposer l'instrument au studio ?";
+          swalConfirmText = "Oui je dépose l'instrument !";
         }
 
         if(emprunte && !emprunteParMoi){
           sawlTitle = instrument.emprunteurNom+" me passe l'instrument "+instrument.name;
-          sawlText = "J'ai vu avec "+instrument.emprunteurNom;
-          swalConfirmText = "Oui je prend cet instrument !";
+          sawlText = "";
+          swalConfirmText = "Oui je prends cet instrument !";
         }
 
         Swal.fire({
@@ -154,10 +154,6 @@ function EmpruntListe() {
         <Layout>
           <Menu active="instrus" />
           <h2 className="adresseName text-center mt-5 mb-3">Bienvenue {utilisateurName} !</h2>
-          { utilisateurAdresse &&
-            <h4 className="adresseLigne text-center mt-5 mb-3"><small>{utilisateurAdresse}</small>
-            </h4>
-          }
             {userCookie
               ? <UtilisateurModal user={userCookie} userName={utilisateurName} userAddress={utilisateurAdresse}
               linkText="Changer d'utilisateur ou d'adresse"
@@ -168,7 +164,7 @@ function EmpruntListe() {
             }
 
         {instrumentsEmprunteList.length > 0 &&
-        <h2 className="text-center mt-5 mb-3">Mes emprunts</h2>
+        <h2 className="titre text-center mt-5 mb-3">Mes emprunts</h2>
         }
         {instrumentsEmprunteList.length > 0 &&
           <div className="card">
@@ -189,7 +185,7 @@ function EmpruntListe() {
             </div>
           }
 
-          <h2 className="text-center mt-5 mb-3">{(instrumentsEmprunteList.length > 0)? "Autres instruments" : "Instruments" }</h2>
+          <h2 className="titre text-center mt-5 mb-3">{(instrumentsEmprunteList.length > 0)? "Autres instruments" : "Instruments" }</h2>
             <div className="card">
               <div className="card-body">
                 <div className="list-group">

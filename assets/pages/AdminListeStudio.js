@@ -74,7 +74,7 @@ function AdminListeStudio() {
               </Link>
             </div>
             <div className="col">
-              <h2 className="text-center">Au studio</h2>
+              <h2 className="text-center titre">Au studio</h2>
             </div>
             <div className="col">
             </div>

@@ -48,7 +48,7 @@ function AdminInstrumentCreate() {
     return (
         <Layout>
             <Menu active="admin" />
-                <h2 className="text-center mt-5 mb-3">Ajouter un instrument</h2>
+                <h2 className="titre text-center mt-5 mb-3">Ajouter un instrument</h2>
                 <div className="card">
                     <div className="card-header">
                         <Link

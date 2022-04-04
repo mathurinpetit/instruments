@@ -57,7 +57,7 @@ function AdminSondages() {
               </Link>
             </div>
             <div className="col">
-              <h2 className="text-center">Gestion Communication</h2>
+              <h2 className="text-center titre ">Gestion Communication</h2>
             </div>
             <div className="col">
             </div>
@@ -73,7 +73,7 @@ function AdminSondages() {
               </div>
                   <div className="card-body">
 
-                      <table className="table table-bordered">
+                      <table className="table table-bordered sondages">
                           <thead>
                               <tr>
                                   <th>Sondages</th>
@@ -97,7 +97,7 @@ function AdminSondages() {
                           </tbody>
                         </table>
                         <br/>
-                        <table className="table table-bordered">
+                        <table className="table table-bordered sondages">
                             <thead>
                               <tr>
                                 <th>Informations</th>

@@ -3,14 +3,17 @@ body, .card-body, .table {
     color: white;
 }
 
+.sondages {
+  background-color: white !important;
+  color: black !important;
+}
+
 .card-header {
   background-color: rgba(50, 50, 50);
   border-bottom: 1px solid rgba(200,200,200);
 }
 
-h1,
-h2,
-.modal-title
+.titre
 {
     font-family: "Cracked", Regular;
     font-size: 1.3rem;
@@ -63,7 +66,7 @@ padding: .5rem .5rem;
   line-height: 37px;
   text-align: center;
   width: 40px;
-  font-family: "Cracked", Regular;
+  font-weight: bolder;
 }
 
 .btn-group-xs > .btn, .btn-xs {
@@ -90,15 +93,6 @@ padding: .5rem .5rem;
 }
 
 
-.btn {
-    border: none;
-        border-top-color: currentcolor;
-        border-right-color: currentcolor;
-        border-bottom-color: currentcolor;
-        border-left-color: currentcolor;
-    font-family: "Cracked", Regular;
-}
-
 .btn-link
 {
     color: #e90004 !important;
@@ -120,6 +114,11 @@ padding: .5rem .5rem;
 .emprunte {
   background-color: red;
 }
+
+.mine {
+  background-color: orange;
+}
+
 
 .rsw-editor {
   background-color: white;

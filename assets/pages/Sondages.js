@@ -37,7 +37,7 @@ function Sondages() {
     return (
         <Layout>
           <Menu active="sondages" />
-          <h2 className="text-center mt-5 mb-3">Sondages</h2>
+          <h2 className="titre text-center mt-5 mb-3">Sondages</h2>
             <div className="card">
                 <div className="list-group">
                   <div className="sondages card-body">
@@ -62,7 +62,7 @@ function Sondages() {
                     </div>
                   </div>
                 </div>
-                <h2 className="text-center mt-5 mb-3">Infos</h2>
+                <h2 className="titre text-center mt-5 mb-3">Infos</h2>
                   <div className="card">
                       <div className="list-group">
                         <div className="sondages card-body">

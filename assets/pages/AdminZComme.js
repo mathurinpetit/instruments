@@ -69,7 +69,7 @@ function AdminZComme() {
                 </Link>
               </div>
               <div className="col">
-                <h2 className="text-center">Z . . .  comme . . .</h2>
+                <h2 className="titre text-center">Z . . .  comme . . .</h2>
               </div>
               <div className="col">
               </div>

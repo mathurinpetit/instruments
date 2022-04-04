@@ -31,8 +31,11 @@ function EmpruntInstrumentItem(props) {
       <div className="col"></div>
   }
   &nbsp;<div className="p-1">
-            <span className={(props.instrument.emprunte ? ' btn emprunte dot' : 'btn libre dot')}>
-        </span>
+            { (props.emprunteParMoi)?
+            <span className="btn mine dot"><ion-icon name="checkmark-circle-outline" style={{marginTop: -10 + 'px',marginLeft: -16 + 'px', width: 2+ "rem", height: 2+"rem"}} ></ion-icon></span>
+            :
+            <span className={(props.instrument.emprunte ? 'btn emprunte dot' : 'btn libre dot')}></span>
+            }
   </div>
 </div>
 
