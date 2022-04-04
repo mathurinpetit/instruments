@@ -47,7 +47,7 @@ class EmpruntController extends AbstractController
         ];
      }
 
-    $sortedTypes = ["Coupe","Double","Repik","Caisse","Marca1","Marca2","Timbao"];
+    $sortedTypes = ["Coupe","Double","Caisse","Repik","Marca1","Marca2","Timbao"];
 
     $data = [];
     foreach ($sortedTypes as $sortedType) {
