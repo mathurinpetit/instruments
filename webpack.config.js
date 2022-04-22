@@ -69,6 +69,8 @@ Encore
         options['process.env'].REACT_APP_API_PASSWORD = JSON.stringify(env.parsed.REACT_APP_API_PASSWORD);
         options['process.env'].REACT_APP_ADRESSE_API_URL = JSON.stringify(env.parsed.REACT_APP_ADRESSE_API_URL);
         options['process.env'].REACT_APP_ADRESSE_API_PARAMS = JSON.stringify(env.parsed.REACT_APP_ADRESSE_API_PARAMS);
+        options['process.env'].REACT_APP_DEFAULT_LAT = JSON.stringify(env.parsed.REACT_APP_DEFAULT_LAT);
+        options['process.env'].REACT_APP_DEFAULT_LON = JSON.stringify(env.parsed.REACT_APP_DEFAULT_LON);
     }).copyFiles({
          from: './assets/images',
 

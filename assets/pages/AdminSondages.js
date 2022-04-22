@@ -117,7 +117,7 @@ function AdminSondages() {
                       <table className="table table-bordered sondages">
                           <thead>
                             <tr>
-                              <th>Playliste</th>
+                              <th>Playlists</th>
                               </tr>
                               </thead>
                               <tbody>

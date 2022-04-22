@@ -86,7 +86,7 @@ function AdminSondagesEdit() {
                             </div>
                             <br/>
                             <div className="form-group">
-                                <label htmlFor="playliste">Playliste</label>
+                                <label htmlFor="playliste">Playlists</label>
                                   <textarea
                                       value={playliste}
                                       onChange={(event)=>{setPlayliste(event.target.value)}}
