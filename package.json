@@ -37,6 +37,7 @@
         "react-router-dom": "^5.2.0",
         "react-select": "^5.2.2",
         "react-simple-wysiwyg": "^2.0.2",
+        "react-tooltip": "^4.2.21",
         "sweetalert2": "^11.4.4",
         "universal-cookie": "^4.0.4"
     }

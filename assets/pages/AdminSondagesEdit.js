@@ -12,6 +12,7 @@ function AdminSondagesEdit() {
 
     const [sondages, setSondages] = useState('');
     const [informations, setInformations] = useState('');
+    const [playliste, setPlayliste] = useState('');
     const [isSaving, setIsSaving] = useState(false)
 
 
@@ -20,6 +21,7 @@ function AdminSondagesEdit() {
         .then(function (response) {
           setSondages(response.data.sondages);
           setInformations(response.data.informations);
+          setPlayliste(response.data.playliste);
         })
         .catch(function (error) {
           console.log(error);
@@ -31,12 +33,12 @@ function AdminSondagesEdit() {
         setInformations(e.target.value);
     }
 
-
     const handleSave = () => {
         setIsSaving(true);
         axios.patch(`/admin/communication/edition`, {
             sondages: sondages,
-            informations: informations
+            informations: informations,
+            playliste: playliste
         })
         .then(function (response) {
             Swal.fire({
@@ -63,7 +65,7 @@ function AdminSondagesEdit() {
     return (
         <Layout>
           <Menu active="admin" />
-                <h2 className="titre text-center mt-5 mb-3">Edition des sondages</h2>
+                <h2 className="titre text-center mt-5 mb-3">Edition Communication</h2>
                 <div className="card">
                     <div className="card-body">
                         <form>
@@ -77,9 +79,21 @@ function AdminSondagesEdit() {
                                     rows="4"
                                     name="description"></textarea>
                             </div>
+                            <br/>
                             <div className="form-group">
                                 <label htmlFor="description">Informations</label>
                                 <DefaultEditor value={informations} onChange={onChangeInformations} />
+                            </div>
+                            <br/>
+                            <div className="form-group">
+                                <label htmlFor="playliste">Playliste</label>
+                                  <textarea
+                                      value={playliste}
+                                      onChange={(event)=>{setPlayliste(event.target.value)}}
+                                      className="form-control"
+                                      id="playliste"
+                                      rows="4"
+                                      name="playliste"></textarea>
                             </div>
                             <button
                                 disabled={isSaving}

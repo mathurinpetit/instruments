@@ -24,7 +24,13 @@ class Communication
 
 
     /**
-     * @ORM\Column(type="string", length=10240, nullable=true)
+     * @ORM\Column(type="string", length=4096, nullable=true)
+     */
+    private $playliste;
+
+
+    /**
+     * @ORM\Column(type="string", length=8000, nullable=true)
      */
     private $informations;
 
@@ -41,6 +47,19 @@ class Communication
     public function setSondage(?string $sondage): self
     {
         $this->sondage = $sondage;
+
+        return $this;
+    }
+
+
+    public function getPlayliste(): ?string
+    {
+        return $this->playliste;
+    }
+
+    public function setPlayliste(?string $playliste): self
+    {
+        $this->playliste = $playliste;
 
         return $this;
     }

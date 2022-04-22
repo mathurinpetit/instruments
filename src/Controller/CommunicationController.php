@@ -30,7 +30,7 @@ class CommunicationController extends AbstractController
        $data = array('sondages' => "", 'informations' => "");
        if(count($communication)){
          $element = array_shift($communication);
-         $data = array("sondages" => $element->getSondage(), "informations" => $element->getInformations());
+         $data = array("sondages" => $element->getSondage(), "informations" => $element->getInformations(), "playliste" => $element->getPlayliste());
        }
 
        $response->setContent(json_encode($data));

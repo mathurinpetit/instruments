@@ -19,6 +19,7 @@ import AdminInstrumentEdit from "./AdminInstrumentEdit"
 function AdminSondages() {
   const  [sondages, setSondages] = useState([])
   const  [informations, setInformations] = useState([])
+  const  [playliste, setPlayliste] = useState([])
 
   useEffect(() => {
       fetchCommunication()
@@ -37,6 +38,7 @@ function AdminSondages() {
       .then(function (response) {
         setSondages(response.data.sondages);
         setInformations(response.data.informations);
+        setPlayliste(response.data.playliste);
       })
       .catch(function (error) {
         console.log(error);
@@ -112,6 +114,29 @@ function AdminSondages() {
                                   </tr>
                           </tbody>
                       </table>
+                      <table className="table table-bordered sondages">
+                          <thead>
+                            <tr>
+                              <th>Playliste</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                    <td>
+                                      <Linkify>
+                                      { (playliste+"").split('\n').map((line, key) => {
+                                        return (
+                                          <span  key={key}  >
+                                            {line}
+                                            <br/>
+                                          </span>
+                                      )
+                                      })}
+                                      </Linkify>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
                   </div>
               </div>
       </Layout>

@@ -315,13 +315,15 @@ public function utilisateurDelete(string $id): Response
      $communication = new Communication();
      $communication->setSondage($content->sondages);
      $communication->setInformations($content->informations);
+     $communication->setPlayliste($content->playliste);
      $entityManager->persist($communication);
 
      $entityManager->flush();
      $data =  [
          'id' => $communication->getId(),
          'sondages' => $communication->getSondage(),
-         'informations' => $communication->getInformations()
+         'informations' => $communication->getInformations(),
+         'playliste' => $communication->getPlayliste()
      ];
 
      $response->setContent(json_encode($data));

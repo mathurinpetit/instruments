@@ -11,6 +11,7 @@ function Sondages() {
 
     const  [sondages, setSondages] = useState([]);
     const  [informations, setInformations] = useState('');
+    const  [playliste, setPlayliste] = useState([]);
 
     useEffect(() => {
         fetchCommunication();
@@ -27,6 +28,7 @@ function Sondages() {
         .then(function (response) {
           setSondages(response.data.sondages);
           setInformations(response.data.informations);
+          setPlayliste(response.data.playliste);
         })
         .catch(function (error) {
           console.log(error);
@@ -73,8 +75,33 @@ function Sondages() {
                           </div>
                         </div>
                       </div>
-                      <br/>
-                      <br/>
+                      <h2 className="titre text-center mt-5 mb-3">Playlist</h2>
+                        <div className="card">
+                            <div className="list-group">
+                              <div className="sondages card-body">
+                                  <div className="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                      <h6 className="mb-0"></h6>
+                                      <p className="mb-0 opacity-75">
+
+                                          <Linkify>
+                                          { (playliste+"").split('\n').map((line, key) => {
+                                            return (
+                                              <span  key={key}  >
+                                                {line}
+                                                <br/>
+                                              </span>
+                                          )
+                                          })}
+                                          </Linkify>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                    <br/>
+                  <br/>
         </Layout>
     );
 }

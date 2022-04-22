@@ -11,6 +11,7 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './js/boostrap.bundle.min-5.0.2.js';
+import './js/ionicons.js';
 import './bootstrap';
 
 require('./Main');
