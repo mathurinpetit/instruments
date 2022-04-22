@@ -15,7 +15,7 @@ import Marca2 from "../images/icons/Marca2.png";
 import Timbao from "../images/icons/Timbao.png";
 
 
-const centerMap = [48.902170, 2.400660] //Oscillo studio
+const centerMap = [process.env.REACT_APP_DEFAULT_LAT,process.env.REACT_APP_DEFAULT_LON]; //Oscillo studio
 
 function CarteGlobale() {
 
