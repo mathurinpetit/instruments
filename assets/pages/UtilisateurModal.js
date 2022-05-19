@@ -20,6 +20,7 @@ function UtilisateurModal(props) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [utilisateursOptions, setUtilisateursOptions] = useState([])
   const [name, setName] = useState('');
+  const [inputName, setInputName] = useState('');
   const [isSaving, setIsSaving] = useState(false)
   const [isNew, setIsNew] = useState(false);
   const [show, setShow] = useState(false);
@@ -104,6 +105,17 @@ const moveSelectionOfAdresse = (adresseStr) => {
     setSelectedAdresse([]);
   }
 
+  const handleInputChange = (newValue) => {
+    setInputName(newValue);
+  };
+
+  const handleCloseMenu = () => {
+    if(!name && inputName){
+      setName(inputName);
+      setIsNew(true);
+    }
+  };
+
   const handleNomChange = (
       newValue,
       actionMeta
@@ -119,6 +131,7 @@ const moveSelectionOfAdresse = (adresseStr) => {
         setIsNew(true);
       }
       if(`${actionMeta.action}` == "select-option"){
+        setInputName("");
         setName(newValue.value);
         setChecked(false);
         if(newValue.adresse){
@@ -160,9 +173,9 @@ const moveSelectionOfAdresse = (adresseStr) => {
 };
 
   const handleSave = () => {
-      setIsSaving(true);
+      setIsSaving(true);      
       if(isNew){
-        let formData = new FormData()
+        let formData = new FormData();
         formData.append("name", name);
         if(address.selected !== undefined){
           formData.append("address",address.selected[0].adresse)
@@ -172,21 +185,32 @@ const moveSelectionOfAdresse = (adresseStr) => {
           formData.append("lon", null)
           formData.append("lat", null)
         }
+        var utilisateur = null;
         axios.post('/identification/utilisateur', formData)
             .then(function (response) {
-              let utilisateur = response.data
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Bienvenue '+utilisateur.nom+'!',
-                  showConfirmButton: false,
-                  timer: 1500
-              })
-              setName('');
-              setAddress('');
-              setIsSaving(false);
-              cookies.set('utilisateur', utilisateur.id, { path: '/' });
-              history.push('/');
-              handleClose();
+              utilisateur = response.data;
+              if(utilisateur.id){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Bienvenue '+utilisateur.nom+'!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setName('');
+                setAddress('');
+                setIsSaving(false);
+                cookies.set('utilisateur', utilisateur.id, { path: '/' });
+                history.push('/');
+                handleClose();
+              }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: utilisateur,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                history.push('/');
+              }
             })
             .catch(function (error) {
               Swal.fire({
@@ -243,6 +267,8 @@ const moveSelectionOfAdresse = (adresseStr) => {
                       <div className="form-group">
                               <CreatableSelect
                                 onChange={handleNomChange}
+                                onInputChange={handleInputChange}
+                                onBlur={handleCloseMenu}
                                 options={utilisateursOptions}
                                 id="name"
                                 name="name"
