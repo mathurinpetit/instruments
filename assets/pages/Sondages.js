@@ -75,7 +75,7 @@ function Sondages() {
                           </div>
                         </div>
                       </div>
-                      <h2 className="titre text-center mt-5 mb-3">Playlist</h2>
+                      <h2 className="titre text-center mt-5 mb-3">Playlists</h2>
                         <div className="card">
                             <div className="list-group">
                               <div className="sondages card-body">

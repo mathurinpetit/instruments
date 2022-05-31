@@ -26,7 +26,7 @@ function UtilisateurModal(props) {
   const [show, setShow] = useState(false);
 
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const [address, setAddress] = useState("");
   const [selectedAdresse, setSelectedAdresse] = useState([]);
   const [isAdresseLoading, setIsAdresseLoading] = useState(false);
@@ -52,7 +52,7 @@ function UtilisateurModal(props) {
       setChecked(false);
       moveSelectionOfAdresse(props.userAddress)
     }else{
-      setChecked(false);
+      setChecked(true);
     }
 
   }
@@ -173,7 +173,7 @@ const moveSelectionOfAdresse = (adresseStr) => {
 };
 
   const handleSave = () => {
-      setIsSaving(true);      
+      setIsSaving(true);
       if(isNew){
         let formData = new FormData();
         formData.append("name", name);
